@@ -1,0 +1,78 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+        <AssemblyName>CIS.Service.Client</AssemblyName>
+        <PackageId>SPOLETO.CIS.Service.Client</PackageId>
+        <RootNamespace>CIS.Service.Client</RootNamespace>
+        <Product>CIS.Service.Client library</Product>
+        <Description>
+            CIS.Service.Client library.
+            Чтобы подключить этот клиент, надо инициализировать две зависимости (например, в Startup.cs):
+            services.AddSingleton&lt;ICisServiceProvider, CisServiceProvider&gt;();
+            services.AddSingleton&lt;ICisServiceTokenProvider, CisServiceNegotiateTokenProvider&gt;();
+
+            Плюс дополнительно можно указать конвертеры для объектов:
+            services.AddSingleton&lt;IContainerModelConverter, ContainerModelConverter&gt;();
+            services.AddSingleton&lt;IModelConverter, IIdentityConverter&gt;().
+
+            Если не указать конвертеры, то вышеуказанные конвертеры будут использованы по умолчанию.
+        </Description>
+        <Authors>SPOLETO Software developers</Authors>
+        <Company>SPOLETO Software Development</Company>
+		<PackageProjectUrl>https://spoleto-software.ru</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/spoleto-software/CIS.Service.Client</RepositoryUrl>		
+        <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+        <Copyright>Copyright © $([System.DateTime]::Now.Year.ToString())</Copyright>
+        <Version>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</Version>
+        <AssemblyVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</AssemblyVersion>
+        <FileVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</FileVersion>
+        <PackageIcon>MainIcon.png</PackageIcon>
+        <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <!-- Include symbols for debugging -->
+    <PropertyGroup>
+        <!-- This command creates external file (snupkg) with .pdb next to nuget file (nupkg) -->
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>RESTful client, Web client, Http client</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\README.md">
+          <Pack>True</Pack>
+          <PackagePath>\</PackagePath>
+        </None>
+        <None Include="Resources\MainIcon.png">
+            <Pack>True</Pack>
+            <PackagePath></PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.7.14" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netstandard'">
+         <!-- Properties for netstandard --> 
+        <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+        <PackageReference Include="System.Text.Json" Version="4.7.0" />
+    </ItemGroup>
+
+    <!-- В режиме Debug подключаем базовый проект как обычную project зависимость (для удобного дебага) -->
+    <ItemGroup Condition="'$(Configuration)'=='Debug'">
+        <ProjectReference Include="..\CIS.Service.Client.Interfaces\CIS.Service.Client.Interfaces.csproj" />
+    </ItemGroup>
+
+    <!-- В режиме Release подключаем базовый проект как nuget зависимость (для правильного построения зависимостей в файле-описании этого nuget пакета) -->
+    <ItemGroup Condition="'$(Configuration)'=='Release'">
+        <PackageReference Include="CIS.Service.Client.Interfaces" Version="*" />
+    </ItemGroup>
+
+</Project>
