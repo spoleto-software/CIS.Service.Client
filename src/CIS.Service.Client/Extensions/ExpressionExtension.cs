@@ -8,7 +8,7 @@ namespace CIS.Service.Client.Extensions
     {
         public static Dictionary<string, object> ToDictionaryValues<T>(this Expression<Func<T>> expr)
         {
-            if (expr?.Body is not MemberInitExpression memberInitExpression)
+            if (!(expr?.Body is MemberInitExpression memberInitExpression))
             {
                 return null;
             }

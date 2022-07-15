@@ -17,7 +17,6 @@
         <AssemblyVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</AssemblyVersion>
         <FileVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</FileVersion>
         <PackageIcon>MainIcon.png</PackageIcon>
-        <LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <!-- Include symbols for debugging -->
