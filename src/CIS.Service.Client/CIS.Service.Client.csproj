@@ -28,6 +28,7 @@
         <AssemblyVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</AssemblyVersion>
         <FileVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</FileVersion>
         <PackageIcon>MainIcon.png</PackageIcon>
+		<LangVersion>latest</LangVersion>
     </PropertyGroup>
 
     <!-- Include symbols for debugging -->
@@ -55,23 +56,14 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.7.14" />
+        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.7.14.821" />
+		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.15.1320" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netstandard'">
          <!-- Properties for netstandard --> 
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
         <PackageReference Include="System.Text.Json" Version="4.7.0" />
-    </ItemGroup>
-
-    <!-- В режиме Debug подключаем базовый проект как обычную project зависимость (для удобного дебага) -->
-    <ItemGroup Condition="'$(Configuration)'=='Debug'">
-        <ProjectReference Include="..\CIS.Service.Client.Interfaces\CIS.Service.Client.Interfaces.csproj" />
-    </ItemGroup>
-
-    <!-- В режиме Release подключаем базовый проект как nuget зависимость (для правильного построения зависимостей в файле-описании этого nuget пакета) -->
-    <ItemGroup Condition="'$(Configuration)'=='Release'">
-        <PackageReference Include="CIS.Service.Client.Interfaces" Version="*" />
     </ItemGroup>
 
 </Project>

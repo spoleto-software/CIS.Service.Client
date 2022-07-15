@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CIS.Service.Client.Interfaces\CIS.Service.Client.Interfaces.csproj" />
     <ProjectReference Include="..\CIS.Service.Client\CIS.Service.Client.csproj" />
   </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.7" />
+        <PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.15.1320" />
     </ItemGroup>
 </Project>
