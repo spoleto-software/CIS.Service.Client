@@ -2,14 +2,14 @@
 
 Чтобы подключить этот клиент, надо инициализировать две зависимости (например, в `Startup.cs`):
 ```
-services.AddSingleton&lt;ICisServiceProvider, CisServiceProvider&gt;();
-services.AddSingleton&lt;ICisServiceTokenProvider, CisServiceNegotiateTokenProvider&gt;();
+services.AddSingleton<ICisServiceProvider, CisServiceProvider>();
+services.AddSingleton<ICisServiceTokenProvider, CisServiceNegotiateTokenProvider>();
 ```
 
 
 Плюс дополнительно можно указать конвертеры для объектов:
 ```
-services.AddSingleton&lt;IContainerModelConverter, ContainerModelConverter&gt;();
-services.AddSingleton&lt;IModelConverter, IIdentityConverter&gt;().
+services.AddSingleton<IContainerModelConverter, ContainerModelConverter>();
+services.AddSingleton<IModelConverter, IIdentityConverter>().
 ```
 Если не указать конвертеры, то вышеуказанные конвертеры будут использованы по умолчанию.
