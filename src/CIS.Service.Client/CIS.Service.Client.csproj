@@ -3,8 +3,8 @@
     <PropertyGroup>
         <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
         <AssemblyName>CIS.Service.Client</AssemblyName>
-        <PackageId>Spoleto.CIS.Service.Client</PackageId>
         <RootNamespace>CIS.Service.Client</RootNamespace>
+		<Title>CIS.Service.Client</Title>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<LangVersion>latest</LangVersion>
@@ -21,8 +21,8 @@
 	<PropertyGroup>
 		<Product>CIS.Service.Client library</Product>
 		<Description>The client for SPOLETO RESTful service</Description>
-		<PackageId>Spoleto.CIS.EDM</PackageId>
-		<Authors>Oleg Nadymov</Authors>
+		<PackageId>Spoleto.CIS.Service.Client</PackageId>
+		<Authors>OlegNadymov;Spoleto-Software</Authors>
 		<Company>SPOLETO Software Development</Company>
 		<PackageIcon>MainIcon.png</PackageIcon>
 		<PackageProjectUrl>https://spoleto.ru</PackageProjectUrl>
