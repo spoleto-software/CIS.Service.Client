@@ -5,29 +5,8 @@
         <AssemblyName>CIS.Service.Client</AssemblyName>
         <PackageId>Spoleto.CIS.Service.Client</PackageId>
         <RootNamespace>CIS.Service.Client</RootNamespace>
-        <Product>CIS.Service.Client library</Product>
-        <Description>
-            CIS.Service.Client library.
-            Чтобы подключить этот клиент, надо инициализировать две зависимости (например, в Startup.cs):
-            services.AddSingleton&lt;ICisServiceProvider, CisServiceProvider&gt;();
-            services.AddSingleton&lt;ICisServiceTokenProvider, CisServiceNegotiateTokenProvider&gt;();
-
-            Плюс дополнительно можно указать конвертеры для объектов:
-            services.AddSingleton&lt;IContainerModelConverter, ContainerModelConverter&gt;();
-            services.AddSingleton&lt;IModelConverter, IIdentityConverter&gt;().
-
-            Если не указать конвертеры, то вышеуказанные конвертеры будут использованы по умолчанию.
-        </Description>
-        <Authors>SPOLETO Software developers</Authors>
-        <Company>SPOLETO Software Development</Company>
-		<PackageProjectUrl>https://spoleto-software.ru</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/spoleto-software/CIS.Service.Client</RepositoryUrl>		
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
-        <Copyright>Copyright © $([System.DateTime]::Now.Year.ToString())</Copyright>
-        <Version>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</Version>
-        <AssemblyVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</AssemblyVersion>
-        <FileVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</FileVersion>
-        <PackageIcon>MainIcon.png</PackageIcon>
+		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<LangVersion>latest</LangVersion>
     </PropertyGroup>
 
@@ -36,11 +15,28 @@
         <!-- This command creates external file (snupkg) with .pdb next to nuget file (nupkg) -->
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PackageReadmeFile>README.md</PackageReadmeFile>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>RESTful client, Web client, Http client</PackageTags>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
+
+	<!-- Package info -->
+	<PropertyGroup>
+		<Product>CIS.Service.Client library</Product>
+		<Description>The client for SPOLETO RESTful service</Description>
+		<PackageId>Spoleto.CIS.EDM</PackageId>
+		<Authors>Oleg Nadymov</Authors>
+		<Company>SPOLETO Software Development</Company>
+		<PackageIcon>MainIcon.png</PackageIcon>
+		<PackageProjectUrl>https://spoleto.ru</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/spoleto-software/CIS.Service.Client</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>RESTful client; Web client; Http client; RESTful</PackageTags>
+		<Copyright>Copyright © $([System.DateTime]::Now.Year.ToString())</Copyright>
+		<PackageReleaseNotes></PackageReleaseNotes>
+		<Version>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</Version>
+		<AssemblyVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</AssemblyVersion>
+		<FileVersion>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</FileVersion>
+	</PropertyGroup>	
 
     <ItemGroup>
         <None Include="..\..\README.md">
