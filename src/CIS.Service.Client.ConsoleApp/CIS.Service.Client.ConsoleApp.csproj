@@ -25,6 +25,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.7" />
-        <PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.15.1320" />
+        <PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.19.1008" />
     </ItemGroup>
 </Project>

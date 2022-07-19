@@ -30,7 +30,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<PackageTags>RESTful client; Web client; Http client; RESTful</PackageTags>
+		<PackageTags>RESTful; Web; Http; client</PackageTags>
 		<Copyright>Copyright © $([System.DateTime]::Now.Year.ToString())</Copyright>
 		<PackageReleaseNotes></PackageReleaseNotes>
 		<Version>$([System.DateTime]::Now.AddYears(-2020).Year.ToString()).$([System.DateTime]::Now.ToString("MM.dd.HHmm"))</Version>
@@ -53,7 +53,7 @@
         <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
         <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.7.14.821" />
-		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.15.1320" />
+		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.19.1008" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netstandard'">
