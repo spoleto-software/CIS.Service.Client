@@ -152,11 +152,15 @@ namespace CIS.Service.Client.Services
             await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
         }
 
-        public async Task Execute<T>(T obj, string methodName, params object[] args) where T : IdentityObject
+        public async Task Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/ExecuteByObject");
 
-            var executeModel = new ExecuteObjectModel<T>(obj, methodName, args);
+            var objValues = obj.ToDictionaryValues();
+            if (objValues == null)
+                throw new ArgumentNullException("Incorrect initialization of object in Execute method");
+
+            var executeModel = new ExecuteObjectModel<T>(objValues, methodName, args);
             var jsonModel = JsonHelper.ToJson(executeModel);
 
             await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);

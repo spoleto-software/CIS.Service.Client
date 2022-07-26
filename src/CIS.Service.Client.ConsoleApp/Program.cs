@@ -103,16 +103,29 @@ namespace CIS.Service.Client.ConsoleApp
                     var saleSlip = new SaleSlip
                     {
                         Identity = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67"),
-                        DateBegin = DateTime.Parse("2022-06-01"),
                         DateEnd = DateTime.Parse("2022-06-02"),
                         Note = "Test slip",
-                        Number = 12345
+                        PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
                     };
 
                     // метод без аргументов:
-                    await persistentProvider.Execute(saleSlip, "CalcBonusAmount");
+                    await persistentProvider.Execute(() => new SaleSlip
+                    {
+                        Identity = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67"),
+                        DateEnd = DateTime.Parse("2022-06-02"),
+                        Note = "Test slip",
+                        PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
+                    },
+                    "CalcBonusAmount");
+
                     // метод с аргументами:
-                    await persistentProvider.Execute(saleSlip, "CloseSlip", false);
+                    await persistentProvider.Execute(() => new SaleSlip
+                    {
+                        DateEnd = DateTime.Parse("2022-06-02"),
+                        Note = "Test slip",
+                        PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
+                    },
+                    "CloseSlip", false);
 
                     var employeeList = await persistentProvider.LoadObjectListAsync<Employee>(new SearchModel { ExecuteExpression = $"TPF.GetPresentEmployees(Guid.Parse(\"cb9271b6-c16f-4bc6-bd32-55cd83c70211\"), DateTime.Today, true, Guid.Parse(\"BB01D476-D2BE-4F59-A190-002DA10A2867\"))" });
 

@@ -24,5 +24,10 @@ namespace CIS.Service.Client.ConsoleApp
         /// Номер чека
         /// </summary>
         public long Number { get; set; }
+
+        /// <summary>
+        /// Магазин
+        /// </summary>
+        public Guid PointSiteTDId { get; set; }
     }
 }

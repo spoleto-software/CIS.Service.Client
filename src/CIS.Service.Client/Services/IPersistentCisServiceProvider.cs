@@ -41,8 +41,19 @@ namespace CIS.Service.Client.Services
 
         /// <summary>
         /// Executes the custom method on the specified object.<br/>
-        /// The object has to be passed, it will not be reloaded on Web Api side.
+        /// The object has to be passed, it will be changed or added to the session.
         /// </summary>
-        Task Execute<T>(T obj, string methodName, params object[] args) where T : IdentityObject;
+        /// <remarks>
+        ///  
+        /// await persistentProvider.Execute(() => new SaleSlip
+        ///     {
+        ///         Identity = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041812345"),
+        ///         DateEnd = DateTime.Parse("2022-06-02"),
+        ///         Note = "Test slip",
+        ///     },
+        ///     "CloseSlip", false);
+        ///     
+        /// </remarks>
+        Task Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
     }
 }

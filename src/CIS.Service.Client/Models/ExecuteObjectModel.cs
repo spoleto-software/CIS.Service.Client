@@ -1,4 +1,5 @@
 ﻿using CIS.Service.Client.Interfaces;
+using System.Collections.Generic;
 
 namespace CIS.Service.Client.Models
 {
@@ -17,7 +18,7 @@ namespace CIS.Service.Client.Models
         /// <summary>
         /// Constructor with parameters.
         /// </summary>
-        public ExecuteObjectModel(T obj, string method, object[] args)
+        public ExecuteObjectModel(Dictionary<string, object> obj, string method, object[] args)
         {
             Object = obj;
             Method = method;
@@ -34,9 +35,9 @@ namespace CIS.Service.Client.Models
         }
 
         /// <summary>
-        /// Gets or sets the primary identifier.
+        /// Gets or sets the object data.
         /// </summary>
-        public T Object { get; set; }
+        public Dictionary<string, object> Object { get; set; }
 
         /// <summary>
         /// Gets or sets the method name.
