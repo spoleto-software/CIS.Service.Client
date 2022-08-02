@@ -89,20 +89,39 @@ namespace CIS.Service.Client.Services
                         return default;
                     }
 
-                    //todo: десериализовать Json в объект
                     _logger.LogError(errorResult);
-                    throw new Exception(errorResult);
+                    Exception exception;
+                    if ((int)responseMessage.StatusCode == (int)CustomHttpStatusCode.ExceptionContent)
+                    {
+                        var exceptionContent = JsonHelper.FromJson<ExceptionContent>(errorResult);
+
+                        exception = (Exception)exceptionContent;
+                    }
+                    else
+                        exception= new Exception(errorResult);
+
+                    exception.InitializeException(responseMessage);
+
+                    throw exception;
                 }
                 else
                 {
                     _logger.LogError(errorResult);
-                    throw new Exception(errorResult);
+                    
+                    var exception = new Exception(errorResult);
+                    exception.InitializeException(responseMessage);
+
+                    throw exception;
                 }
             }
             else
             {
                 _logger.LogError(responseMessage.ReasonPhrase);
-                throw new Exception(responseMessage.ReasonPhrase);
+
+                var exception = new Exception(responseMessage.ReasonPhrase);
+                exception.InitializeException(responseMessage);
+
+                throw exception;
             }
         }
 

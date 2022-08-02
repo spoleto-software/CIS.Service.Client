@@ -51,18 +51,35 @@ namespace CIS.Service.Client.Services
                 return tokenModel;
             }
 
-            if (!string.IsNullOrEmpty(result))
-            {
-                _logger.LogError(result);
-                if (throwOnError)
-                    throw new Exception(result);
 
-                return default;
-            }
-
-            _logger.LogError(responseMessage.ReasonPhrase);
             if (throwOnError)
-                throw new Exception(responseMessage.ReasonPhrase);
+            {
+                Exception exception;
+                if (!string.IsNullOrEmpty(result))
+                {
+                    _logger.LogError(result);
+
+                    if ((int)responseMessage.StatusCode == (int)CustomHttpStatusCode.ExceptionContent)
+                    {
+                        var exceptionContent = JsonHelper.FromJson<ExceptionContent>(result);
+
+                        exception = (Exception)exceptionContent;
+                    }
+                    else
+                    {
+                        exception = new Exception(result);
+                    }
+                }
+                else
+                {
+                    _logger.LogError(responseMessage.ReasonPhrase);
+                    exception = new Exception(responseMessage.ReasonPhrase);
+                }
+
+                exception.InitializeException(responseMessage);
+
+                throw exception;
+            }
 
             return default;
         }

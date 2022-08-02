@@ -31,9 +31,7 @@ namespace CIS.Service.Client.Helpers
         /// <summary>
         /// Deserializes the type.
         /// </summary>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
-        public static Type DeserializeType(string typeName)
+        public static Type DeserializeType(string typeName, bool throwOnError = false)
         {
             lock (((ICollection)TypeCache).SyncRoot)
             {
@@ -58,7 +56,10 @@ namespace CIS.Service.Client.Helpers
                         }
                     }
 
-                    TypeCache[typeName] = type ?? throw new TypeLoadException($"Cannot load type by the name <{typeName}>.");
+                    if (type == null && throwOnError)
+                        throw new TypeLoadException($"Cannot load type by the name <{typeName}>.");
+
+                    TypeCache[typeName] = type;
                 }
 
                 return type;

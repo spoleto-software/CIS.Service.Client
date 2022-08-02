@@ -17,5 +17,15 @@ namespace CIS.Service.Client.Extensions
         {
             client.Timeout = new TimeSpan(0, 0, 5, 0);
         }
+
+        public static void InitializeException(this Exception exception, HttpResponseMessage responseMessage)
+        {
+            exception.Data.Add(nameof(responseMessage.StatusCode), responseMessage.StatusCode);
+            exception.Data.Add(nameof(responseMessage.ReasonPhrase), responseMessage.ReasonPhrase);
+            
+            if (responseMessage.RequestMessage?.RequestUri != null)
+                exception.Data.Add(nameof(responseMessage.RequestMessage.RequestUri), responseMessage.RequestMessage?.RequestUri);
+
+        }
     }
 }
