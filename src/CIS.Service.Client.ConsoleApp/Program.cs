@@ -90,15 +90,15 @@ namespace CIS.Service.Client.ConsoleApp
 
                 try
                 {
-                    var provider = services.GetRequiredService<ICisServiceProvider>();
+                    //var provider = services.GetRequiredService<ICisServiceProvider>();
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
 
-                    var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
+                    //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
 
-                    // метод без аргументов:
-                    await persistentProvider.Execute<SaleSlip>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
-                    // метод с аргументами:
-                    await persistentProvider.Execute<SaleSlip>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CloseSlip", false);
+                    //// метод без аргументов:
+                    //await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
+                    //// метод с аргументами:
+                    //await persistentProvider.Execute<SaleSlip>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CloseSlip", false);
 
                     var saleSlip = new SaleSlip
                     {
@@ -109,14 +109,14 @@ namespace CIS.Service.Client.ConsoleApp
                     };
 
                     // метод без аргументов:
-                    await persistentProvider.Execute(() => new SaleSlip
+                    await persistentProvider.Execute(() => new SaleSlipInternetOrder
                     {
                         Identity = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67"),
                         DateEnd = DateTime.Parse("2022-06-02"),
                         Note = "Test slip",
                         PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
                     },
-                    "CalcBonusAmount");
+                    "Test");
 
                     // метод с аргументами:
                     await persistentProvider.Execute(() => new SaleSlip

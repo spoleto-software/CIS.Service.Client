@@ -26,6 +26,31 @@ namespace CIS.Service.Client.Models
         [JsonPropertyName("InnerException")]
         public ExceptionContent InnerException { get; set; }
 
+
+        /// <summary>
+        /// User-defined conversion from ExceptionContent to ServiceException 
+        /// </summary>
+        public static explicit operator ServiceException(ExceptionContent exceptionContent)
+        {
+            if (exceptionContent == null)
+            {
+                return null;
+            }
+
+            ServiceException exception;
+            if (exceptionContent.InnerException == null)
+            {
+                exception = new ServiceException(exceptionContent.ExceptionMessage, exceptionContent.ExceptionType);
+            }
+            else
+            {
+                exception = new ServiceException(exceptionContent.ExceptionMessage, exceptionContent.ExceptionType,
+                    new ServiceException(exceptionContent.InnerException.ExceptionMessage, exceptionContent.InnerException.ExceptionType));
+            }
+
+            return exception;
+        }
+
         /// <summary>
         /// User-defined conversion from ExceptionContent to Exception 
         /// </summary>

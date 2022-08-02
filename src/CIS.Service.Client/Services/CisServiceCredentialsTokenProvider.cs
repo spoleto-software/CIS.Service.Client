@@ -61,7 +61,7 @@ namespace CIS.Service.Client.Services
                     {
                         var exceptionContent = JsonHelper.FromJson<ExceptionContent>(result);
 
-                        exception = (Exception)exceptionContent;
+                        exception = (ServiceException)exceptionContent;
                     }
                     else
                     {
