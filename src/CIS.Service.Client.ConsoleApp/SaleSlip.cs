@@ -29,5 +29,7 @@ namespace CIS.Service.Client.ConsoleApp
         /// Магазин
         /// </summary>
         public Guid PointSiteTDId { get; set; }
+
+        public Guid FiscalRegisterId { get; set; }
     }
 }

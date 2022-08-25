@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
+// Примеры работы с клиентом
 namespace CIS.Service.Client.ConsoleApp
 {
     internal class Program
@@ -92,8 +94,13 @@ namespace CIS.Service.Client.ConsoleApp
                 {
                     //var provider = services.GetRequiredService<ICisServiceProvider>();
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
-
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
+
+                    var employee = await persistentProvider.LoadObjectByFilter<Employee>(new SearchModel
+                    {
+                        Filter = $"{nameof(Employee.SamAccountName)} != \"i.ivanov\" && {nameof(Employee.IsActive)} == true",
+                        Select = $"{nameof(Employee.Identity)},{nameof(Employee.DateReceipt)}"
+                    });
 
                     //// метод без аргументов:
                     //await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
@@ -108,15 +115,26 @@ namespace CIS.Service.Client.ConsoleApp
                         PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
                     };
 
+                    var saleSlipId = Guid.NewGuid();
+                    var codes = new List<string>() { "12639760" };
+
+                    await persistentProvider.Execute(() => new SaleSlipInternetOrder
+                    {
+                        FiscalRegisterId = Guid.Parse("F3EA7C57-9EB0-4D56-970C-6992AEAF06D2"),
+                        PointSiteTDId = Guid.Parse("21446014-c597-4bc6-935a-4cd9a9145711")
+                    },
+                    "CreateSlip",
+                    saleSlipId, codes, Guid.Parse("8217683B-F6F1-4DF7-9313-8F328DEF1DF2"), Guid.Parse("21446014-c597-4bc6-935a-4cd9a9145710"), Guid.Parse("A88626AB-F0F7-4589-A624-081838A09037"));
+
                     // метод без аргументов:
                     await persistentProvider.Execute(() => new SaleSlipInternetOrder
                     {
-                        Identity = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67"),
+                        Identity = Guid.Parse("BDA0EC3C-743A-4E89-A769-00009AB4DD0E"),
                         DateEnd = DateTime.Parse("2022-06-02"),
                         Note = "Test slip",
                         PointSiteTDId = Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A67")
                     },
-                    "Test");
+                    "CreateSlip");
 
                     // метод с аргументами:
                     await persistentProvider.Execute(() => new SaleSlip
