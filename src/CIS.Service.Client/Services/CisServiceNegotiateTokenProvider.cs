@@ -93,13 +93,13 @@ namespace CIS.Service.Client.Services
 
             var uri = new Uri(new Uri(settings.WebAPITokenEndpointAddress), "api/negotiatetoken");
 
-            var loginModel = new LoginModel
+            var loginModel = new LoginModelNegotiate
             {
                 ClientCode = settings.ClientCode,
                 ClientSecret = settings.ClientSecret,
                 UserId = settings.UserId,
                 LoginType = settings.LoginType,
-                UserName = settings.UserName,
+                UserName = settings.UserName
                 
             };
             var requestJsonContent = JsonHelper.ToJson(loginModel);

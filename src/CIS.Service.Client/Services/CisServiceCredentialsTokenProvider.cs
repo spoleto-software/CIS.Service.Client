@@ -91,11 +91,10 @@ namespace CIS.Service.Client.Services
 
             var uri = new Uri(new Uri(settings.WebAPITokenEndpointAddress), "api/token");
 
-            var loginModel = new LoginModel
+            var loginModel = new LoginModelCredentials
             {
                 ClientCode = settings.ClientCode,
                 ClientSecret = settings.ClientSecret,
-                UserId = settings.UserId,
                 LoginType = settings.LoginType,
                 UserName = settings.UserName,
                 Password = settings.Password
