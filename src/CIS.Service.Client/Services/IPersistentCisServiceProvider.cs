@@ -37,7 +37,7 @@ namespace CIS.Service.Client.Services
         /// <summary>
         /// Executes the custom method on the specified object.
         /// </summary>
-        Task Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject;
+        Task<string> Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject;
 
         /// <summary>
         /// Executes the custom method on the specified object.<br/>
@@ -54,6 +54,6 @@ namespace CIS.Service.Client.Services
         ///     "CloseSlip", false);
         ///     
         /// </remarks>
-        Task Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
+        Task<string> Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
     }
 }

@@ -102,8 +102,8 @@ namespace CIS.Service.Client.ConsoleApp
                         Select = $"{nameof(Employee.Identity)},{nameof(Employee.DateReceipt)}"
                     });
 
-                    //// метод без аргументов:
-                    //await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
+                    // метод без аргументов:
+                    await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
                     //// метод с аргументами:
                     //await persistentProvider.Execute<SaleSlip>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CloseSlip", false);
 

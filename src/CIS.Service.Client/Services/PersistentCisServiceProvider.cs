@@ -142,17 +142,18 @@ namespace CIS.Service.Client.Services
             await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
         }
 
-        public async Task Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject
+        public async Task<string> Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/ExecuteById");
 
             var executeModel = new ExecuteModel(objectId, methodName, args);
             var jsonModel = JsonHelper.ToJson(executeModel);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
+            var result = await InvokeAsync<string>(Settings, uri, HttpMethod.Post, jsonModel);
+            return result;
         }
 
-        public async Task Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject
+        public async Task<string> Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/ExecuteByObject");
 
@@ -163,7 +164,8 @@ namespace CIS.Service.Client.Services
             var executeModel = new ExecuteObjectModel<T>(objValues, methodName, args);
             var jsonModel = JsonHelper.ToJson(executeModel);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
+            var result = await InvokeAsync<string>(Settings, uri, HttpMethod.Post, jsonModel);
+            return result;
         }
     }
 }
