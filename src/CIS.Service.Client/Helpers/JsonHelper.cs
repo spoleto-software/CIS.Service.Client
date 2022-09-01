@@ -57,8 +57,8 @@ namespace CIS.Service.Client.Helpers
             if (string.IsNullOrEmpty(bodyJson))
                 return default;
 
-            if (typeof(T) == typeof(string))
-                return (T)(object)bodyJson;
+            //if (typeof(T) == typeof(string))
+            //    return (T)(object)bodyJson;
 
             var body = JsonSerializer.Deserialize<T>(bodyJson, _defaultSerializerOptions);
 
@@ -80,8 +80,8 @@ namespace CIS.Service.Client.Helpers
         /// </summary>
         public static object FromJson(string bodyJson, Type returnType)
         {
-            if (returnType == typeof(string))
-                return bodyJson;
+            //if (returnType == typeof(string))
+            //    return bodyJson;
 
             var body = JsonSerializer.Deserialize(bodyJson, returnType, _defaultSerializerOptions);
             return body;
