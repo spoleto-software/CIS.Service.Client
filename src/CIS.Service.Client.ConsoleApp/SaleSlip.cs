@@ -30,6 +30,10 @@ namespace CIS.Service.Client.ConsoleApp
         /// </summary>
         public Guid PointSiteTDId { get; set; }
 
-        public Guid FiscalRegisterId { get; set; }
+        public Guid? FiscalRegisterId { get; set; }
+
+        public Guid MainStateId { get; set; }
+
+        public Guid AdditionalStateId { get; set; }
     }
 }
