@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using CIS.Service.Client.Converters;
 using Core.Common.Converters.Json;
 
 namespace CIS.Service.Client.Helpers
@@ -24,6 +25,7 @@ namespace CIS.Service.Client.Helpers
 
             _defaultSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             _defaultSerializerOptions.Converters.Add(new LocalizableStringJsonConverter());
+            _defaultSerializerOptions.Converters.Add(new StringDecimalConverter());
         }
 
         /// <summary>
