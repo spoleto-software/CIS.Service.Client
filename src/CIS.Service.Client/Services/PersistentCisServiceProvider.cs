@@ -40,6 +40,7 @@ namespace CIS.Service.Client.Services
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/LoadObjectListSimple");
 
+            searchModel ??= new SearchModel();
             var jsonModel = JsonHelper.ToJson(searchModel);
 
             var objList = await InvokeAsync<List<T>>(Settings, uri, HttpMethod.Post, jsonModel);
