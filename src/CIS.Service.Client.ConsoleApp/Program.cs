@@ -36,19 +36,6 @@ namespace CIS.Service.Client.ConsoleApp
         {
             Console.WriteLine("Hello World!");
 
-            var testObj = new TestClass
-            {
-                Name = "test123",
-                PreviewImage = new byte[5] { 1, 22, 39, 44, 9 }
-            };
-
-            var json = JsonHelper.ToJson(testObj);
-            var fromJson = JsonHelper.FromJson<TestClass>(json);
-            if (!testObj.PreviewImage.SequenceEqual(fromJson.PreviewImage))
-            {
-                Console.WriteLine("Not good!");
-            }
-
             var builder = new HostBuilder()
                .ConfigureServices((hostContext, services) =>
                {
@@ -96,6 +83,18 @@ namespace CIS.Service.Client.ConsoleApp
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
 
+                    try
+                    {
+                        await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
+
+                        await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), () => new OnlineOrderBase { DeliveryAddress = "Россия, г Москва, 123, д 123, кв 12345678" });
+
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
+
                     var countryList = await persistentProvider.LoadObjectListAsync<Country>();
                     var clientPersonInfos = await persistentProvider.LoadObjectListAsync<ClientPersonInfo>(new SearchModel { Filter = $@"{nameof(ClientPersonInfo.Identity)} == Guid.Parse(""44413022-36FB-4F84-84E4-98D237BF0D2D"")" });
                     var returnSlips = await persistentProvider.LoadObjectListAsync<ReturnSlip>(new SearchModel { Filter = $@"{nameof(ReturnSlip.AdditionalStateId)} == Guid.Parse(""79247678-11CB-E611-A97B-0050568329F0"")" });
@@ -107,7 +106,7 @@ namespace CIS.Service.Client.ConsoleApp
                     });
 
                     // метод без аргументов:
-                    await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
+                    //await persistentProvider.Execute<SaleSlipInternetOrder>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CalcBonusAmount");
                     //// метод с аргументами:
                     //await persistentProvider.Execute<SaleSlip>(Guid.Parse("ED8B4DF9-9D4B-46E0-979E-000041814A68"), "CloseSlip", false);
 

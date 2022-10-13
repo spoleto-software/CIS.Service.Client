@@ -102,7 +102,7 @@ namespace CIS.Service.Client.Services
             return obj;
         }
 
-        public async Task UpdateAsync<T>(ContainerModel<T> updatingObject) where T : IBody
+        public async Task UpdateAsync<T>(ContainerModel<T> updatingObject, bool throwIfNotFound = true) where T : IBody
         {
             var relativeUri = $"{_controllerName}/{updatingObject.Identity.Value:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
@@ -110,10 +110,10 @@ namespace CIS.Service.Client.Services
             var updateContainer = _converter.UpdateConvert(updatingObject);
             var jsonModel = JsonHelper.ToJson(updateContainer);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Put, jsonModel);
+            await InvokeAsync<object>(Settings, uri, HttpMethod.Put, jsonModel, throwIfNotFound: throwIfNotFound);
         }
 
-        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields) where T : IBody
+        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IBody
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{updatingObjectId:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
@@ -121,15 +121,15 @@ namespace CIS.Service.Client.Services
             var updatingValues = updateFields.ToDictionaryValues();
             var jsonModel = JsonHelper.ToJson(updatingValues);
 
-            await InvokeAsync<object>(Settings, uri, new HttpMethod("PATCH"), jsonModel);
+            await InvokeAsync<object>(Settings, uri, new HttpMethod("PATCH"), jsonModel, throwIfNotFound: throwIfNotFound);
         }
 
-        public async Task DeleteAsync<T>(Guid id) where T : IBody
+        public async Task DeleteAsync<T>(Guid id, bool throwIfNotFound = false) where T : IBody
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{id:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Delete);
+            await InvokeAsync<object>(Settings, uri, HttpMethod.Delete, throwIfNotFound: throwIfNotFound);
         }
 
         public async Task ExecuteSPAsync<T>(string spName, params object[] args) where T : IBody

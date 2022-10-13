@@ -24,11 +24,11 @@ namespace CIS.Service.Client.Services
 
         Task<T> ReadAsync<T>(Guid id) where T : IdentityObject;
 
-        Task UpdateAsync<T>(T updatingObject) where T : IdentityObject;
+        Task UpdateAsync<T>(T updatingObject, bool throwIfNotFound = true) where T : IdentityObject;
 
-        Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields) where T : IdentityObject;
+        Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IdentityObject;
 
-        Task DeleteAsync<T>(Guid id) where T : IdentityObject;
+        Task DeleteAsync<T>(Guid id, bool throwIfNotFound = false) where T : IdentityObject;
 
         Task ExecuteSPAsync<T>(string spName, params object[] args) where T : IdentityObject;
 

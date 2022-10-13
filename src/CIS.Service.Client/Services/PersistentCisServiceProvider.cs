@@ -94,17 +94,17 @@ namespace CIS.Service.Client.Services
             return obj;
         }
 
-        public async Task UpdateAsync<T>(T updatingObject) where T : IdentityObject
+        public async Task UpdateAsync<T>(T updatingObject, bool throwIfNotFound = true) where T : IdentityObject
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{updatingObject.Identity.Value:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
 
             var jsonModel = JsonHelper.ToJson(updatingObject);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Put, jsonModel);
+            await InvokeAsync<object>(Settings, uri, HttpMethod.Put, jsonModel, throwIfNotFound: throwIfNotFound);
         }
 
-        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields) where T : IdentityObject
+        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IdentityObject
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{updatingObjectId:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
@@ -112,15 +112,15 @@ namespace CIS.Service.Client.Services
             var updatingValues = updateFields.ToDictionaryValues();
             var jsonModel = JsonHelper.ToJson(updatingValues);
 
-            await InvokeAsync<object>(Settings, uri, new HttpMethod("PATCH"), jsonModel);
+            await InvokeAsync<object>(Settings, uri, new HttpMethod("PATCH"), jsonModel, throwIfNotFound: throwIfNotFound);
         }
 
-        public async Task DeleteAsync<T>(Guid id) where T : IdentityObject
+        public async Task DeleteAsync<T>(Guid id, bool throwIfNotFound = false) where T : IdentityObject
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{id:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
 
-            await InvokeAsync<object>(Settings, uri, HttpMethod.Delete);
+            await InvokeAsync<object>(Settings, uri, HttpMethod.Delete, throwIfNotFound: throwIfNotFound);
         }
 
         public async Task ExecuteSPAsync<T>(string spName, params object[] args) where T : IdentityObject

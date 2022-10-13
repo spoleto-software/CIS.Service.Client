@@ -24,11 +24,11 @@ namespace CIS.Service.Client.Services
 
         Task<ContainerModel<T>> ReadAsync<T>(Guid id) where T : IBody;
 
-        Task UpdateAsync<T>(ContainerModel<T> updatingObject) where T : IBody;
+        Task UpdateAsync<T>(ContainerModel<T> updatingObject, bool throwIfNotFound = true) where T : IBody;
 
-        Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields) where T : IBody;
+        Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IBody;
 
-        Task DeleteAsync<T>(Guid id) where T : IBody;
+        Task DeleteAsync<T>(Guid id, bool throwIfNotFound = false) where T : IBody;
 
         Task ExecuteSPAsync<T>(string spName, params object[] args) where T : IBody;
 

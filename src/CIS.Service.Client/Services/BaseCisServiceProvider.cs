@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using CIS.Service.Client.Exceptions;
 using CIS.Service.Client.Extensions;
 using CIS.Service.Client.Helpers;
 using CIS.Service.Client.Models;
@@ -16,7 +18,13 @@ namespace CIS.Service.Client.Services
     /// </summary>
     public abstract class BaseCisServiceProvider
     {
-        private const string _objectNotFoundMessage = "\"The object is not found.\"";
+        private static readonly HashSet<string> _objectNotFoundMessages = new()
+        {
+            "\"The object is not found.\"",
+            "\"The object for patching is not found.\"",
+            "\"The object for editing is not found.\"",
+            "\"The object for deleting is not found.\""
+        };
 
         private readonly ILogger _logger;
         private readonly WebApiOption _settings;
@@ -46,7 +54,7 @@ namespace CIS.Service.Client.Services
 
         private async Task<JsonTokenModel> GetTokenAsync(WebApiOption settings) => _token ??= await _tokenProvider.GetTokenAsync(settings);
 
-        protected async Task<T> InvokeAsync<T>(WebApiOption settings, Uri uri, HttpMethod method, string requestJsonContent = null)
+        protected async Task<T> InvokeAsync<T>(WebApiOption settings, Uri uri, HttpMethod method, string requestJsonContent = null, bool throwIfNotFound = true)
         {
             using var client = _httpClientFactory.CreateClient();
             client.ConfigureHttpClient();
@@ -83,9 +91,16 @@ namespace CIS.Service.Client.Services
                 if (responseMessage.Content.Headers.ContentType.MediaType == ContentTypes.ApplicationJson)
                 {
                     if (responseMessage.StatusCode == HttpStatusCode.NotFound
-                       && errorResult == _objectNotFoundMessage
-                       && typeof(T) != typeof(object))
+                       && _objectNotFoundMessages.Contains(errorResult))
                     {
+                        if (throwIfNotFound)
+                        {
+                            var notFoundException = new NotFoundException(errorResult);
+                            notFoundException.InitializeException(responseMessage);
+
+                            throw notFoundException;
+                        }
+
                         return default;
                     }
 
