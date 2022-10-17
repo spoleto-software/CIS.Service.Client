@@ -28,6 +28,8 @@ namespace CIS.Service.Client.Services
 
         Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IBody;
 
+        Task UpdateOnlyAsync<T>(Guid updatingObjectId, Dictionary<string, object> updateFields, bool throwIfNotFound = true) where T : IBody;
+
         Task DeleteAsync<T>(Guid id, bool throwIfNotFound = false) where T : IBody;
 
         Task ExecuteSPAsync<T>(string spName, params object[] args) where T : IBody;

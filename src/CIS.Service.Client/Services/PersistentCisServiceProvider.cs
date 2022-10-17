@@ -104,13 +104,19 @@ namespace CIS.Service.Client.Services
             await InvokeAsync<object>(Settings, uri, HttpMethod.Put, jsonModel, throwIfNotFound: throwIfNotFound);
         }
 
-        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IdentityObject
+        public Task UpdateOnlyAsync<T>(Guid updatingObjectId, Expression<Func<T>> updateFields, bool throwIfNotFound = true) where T : IdentityObject
+        {
+            var updatingValues = updateFields.ToDictionaryValues();
+
+            return UpdateOnlyAsync<T>(updatingObjectId, updatingValues, throwIfNotFound);
+        }
+
+        public async Task UpdateOnlyAsync<T>(Guid updatingObjectId, Dictionary<string, object> updateFields, bool throwIfNotFound = true) where T : IdentityObject
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{updatingObjectId:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
 
-            var updatingValues = updateFields.ToDictionaryValues();
-            var jsonModel = JsonHelper.ToJson(updatingValues);
+            var jsonModel = JsonHelper.ToJson(updateFields);
 
             await InvokeAsync<object>(Settings, uri, new HttpMethod("PATCH"), jsonModel, throwIfNotFound: throwIfNotFound);
         }

@@ -87,6 +87,8 @@ namespace CIS.Service.Client.ConsoleApp
                     {
                         await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
 
+                        await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), new Dictionary<string, object> { { nameof(OnlineOrderBase.DeliveryAddress), "Россия, г Москва, 123, д 123, кв 12345678" } });
+
                         await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), () => new OnlineOrderBase { DeliveryAddress = "Россия, г Москва, 123, д 123, кв 12345678" });
 
                     }
