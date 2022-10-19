@@ -1,9 +1,9 @@
 ﻿namespace CIS.Service.Client.Models
 {
     /// <summary>
-    /// The model with filter and order information for object searching.
+    /// The model with filter, order and other information for object searching.
     /// </summary>
-    public class SearchModel
+    public class SearchModel : FilterModel
     {
         /// <summary>
         /// Gets or sets the expression to execute.<br/>
@@ -15,11 +15,6 @@
         /// Gets or sets the select statement.
         /// </summary>
         public string Select { get; set; }
-
-        /// <summary>
-        /// Gets or sets the filter.
-        /// </summary>
-        public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the order.

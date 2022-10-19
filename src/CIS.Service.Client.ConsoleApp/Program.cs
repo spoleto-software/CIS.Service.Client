@@ -83,6 +83,7 @@ namespace CIS.Service.Client.ConsoleApp
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
 
+                    var count = await persistentProvider.GetCountObjectListAsync<Employee>(new FilterModel { Filter = $"{nameof(Employee.Name)} = \"Иван\"" });
                     try
                     {
                         await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
@@ -101,7 +102,7 @@ namespace CIS.Service.Client.ConsoleApp
                     var clientPersonInfos = await persistentProvider.LoadObjectListAsync<ClientPersonInfo>(new SearchModel { Filter = $@"{nameof(ClientPersonInfo.Identity)} == Guid.Parse(""44413022-36FB-4F84-84E4-98D237BF0D2D"")" });
                     var returnSlips = await persistentProvider.LoadObjectListAsync<ReturnSlip>(new SearchModel { Filter = $@"{nameof(ReturnSlip.AdditionalStateId)} == Guid.Parse(""79247678-11CB-E611-A97B-0050568329F0"")" });
 
-                    var employee = await persistentProvider.LoadObjectByFilter<Employee>(new SearchModel
+                    var employee = await persistentProvider.LoadObjectByFilterAsync<Employee>(new SearchModel
                     {
                         Filter = $"{nameof(Employee.SamAccountName)} != \"i.ivanov\" && {nameof(Employee.IsActive)} == true",
                         Select = $"{nameof(Employee.Identity)},{nameof(Employee.DateReceipt)}"
@@ -123,7 +124,7 @@ namespace CIS.Service.Client.ConsoleApp
                     var saleSlipId = Guid.NewGuid();
                     var codes = new List<string>() { "12639760" };
 
-                    await persistentProvider.Execute(() => new SaleSlipInternetOrder
+                    await persistentProvider.ExecuteAsync(() => new SaleSlipInternetOrder
                     {
                         FiscalRegisterId = Guid.Parse("F3EA7C57-9EB0-4D56-970C-6992AEAF06D2"),
                         PointSiteTDId = Guid.Parse("21446014-c597-4bc6-935a-4cd9a9145711")
@@ -132,7 +133,7 @@ namespace CIS.Service.Client.ConsoleApp
                     saleSlipId, codes, Guid.Parse("8217683B-F6F1-4DF7-9313-8F328DEF1DF2"), Guid.Parse("21446014-c597-4bc6-935a-4cd9a9145710"), Guid.Parse("A88626AB-F0F7-4589-A624-081838A09037"));
 
                     // метод без аргументов:
-                    await persistentProvider.Execute(() => new SaleSlipInternetOrder
+                    await persistentProvider.ExecuteAsync(() => new SaleSlipInternetOrder
                     {
                         Identity = Guid.Parse("BDA0EC3C-743A-4E89-A769-00009AB4DD0E"),
                         DateEnd = DateTime.Parse("2022-06-02"),
@@ -142,7 +143,7 @@ namespace CIS.Service.Client.ConsoleApp
                     "CreateSlip");
 
                     // метод с аргументами:
-                    await persistentProvider.Execute(() => new SaleSlip
+                    await persistentProvider.ExecuteAsync(() => new SaleSlip
                     {
                         DateEnd = DateTime.Parse("2022-06-02"),
                         Note = "Test slip",
@@ -154,7 +155,7 @@ namespace CIS.Service.Client.ConsoleApp
 
                     var testExpression = await persistentProvider.LoadObjectListAsync<Employee>(new SearchModel { Filter = "SqlEx.In(Identity, TPF.GetShopIdsByParent(Guid.Parse(\"cb9271b6-c16f-4bc6-bd32-55cd83c70211\")))" });
 
-                    var goodThing = await persistentProvider.LoadObjectByFilter<GoodThingInfo>(new SearchModel
+                    var goodThing = await persistentProvider.LoadObjectByFilterAsync<GoodThingInfo>(new SearchModel
                     {
                         Filter = $"{nameof(GoodThingInfo.Code)} = \"12463093\"",
                         GroupBy = $"{nameof(GoodThingInfo.TrademarkId)},{nameof(GoodThingInfo.ColorId)}",

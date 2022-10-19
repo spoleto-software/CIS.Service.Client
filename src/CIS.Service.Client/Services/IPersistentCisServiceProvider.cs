@@ -12,7 +12,9 @@ namespace CIS.Service.Client.Services
     /// </summary>
     public interface IPersistentCisServiceProvider
     {
-        Task<T> LoadObjectByFilter<T>(SearchModel searchModel = null) where T : IdentityObject;
+        Task<long> GetCountObjectListAsync<T>(FilterModel filterModel = null);
+
+        Task<T> LoadObjectByFilterAsync<T>(SearchModel searchModel = null) where T : IdentityObject;
 
         Task<List<T>> LoadObjectListAsync<T>(SearchModel searchModel = null) where T : IdentityObject;
 
@@ -39,7 +41,7 @@ namespace CIS.Service.Client.Services
         /// <summary>
         /// Executes the custom method on the specified object.
         /// </summary>
-        Task<string> Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject;
+        Task<string> ExecuteAsync<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject;
 
         /// <summary>
         /// Executes the custom method on the specified object.<br/>
@@ -56,6 +58,6 @@ namespace CIS.Service.Client.Services
         ///     "CloseSlip", false);
         ///     
         /// </remarks>
-        Task<string> Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
+        Task<string> ExecuteAsync<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
     }
 }

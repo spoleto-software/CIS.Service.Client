@@ -25,7 +25,19 @@ namespace CIS.Service.Client.Services
         {
         }
 
-        public async Task<T> LoadObjectByFilter<T>(SearchModel searchModel = null) where T : IdentityObject
+        public async Task<long> GetCountObjectListAsync<T>(FilterModel filterModel = null)
+        {
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/GetCountObjectListSimple");
+
+            filterModel ??= new ();
+            var jsonModel = JsonHelper.ToJson(filterModel);
+
+            var count = await InvokeAsync<long>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return count;
+        }
+
+        public async Task<T> LoadObjectByFilterAsync<T>(SearchModel searchModel = null) where T : IdentityObject
         {
             var singleSearchModel = ToSingleSearchModel(searchModel);
 
@@ -149,7 +161,7 @@ namespace CIS.Service.Client.Services
             await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
         }
 
-        public async Task<string> Execute<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject
+        public async Task<string> ExecuteAsync<T>(Guid objectId, string methodName, params object[] args) where T : IdentityObject
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/ExecuteById");
 
@@ -160,7 +172,7 @@ namespace CIS.Service.Client.Services
             return result;
         }
 
-        public async Task<string> Execute<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject
+        public async Task<string> ExecuteAsync<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject
         {
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/ExecuteByObject");
 
