@@ -79,10 +79,12 @@ namespace CIS.Service.Client.ConsoleApp
 
                 try
                 {
-                    //var provider = services.GetRequiredService<ICisServiceProvider>();
+                    var provider = services.GetRequiredService<ICisServiceProvider>();
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
-
+                    
+                    var roles1 = await provider.LoadObjectListFnAsync<PersistentRole>("\"CIS\".\"_getRolesFn\"", "AF8EBF72-6CA2-4A65-88D0-34B248FE0D6E");
+                    var roles2 = await persistentProvider.LoadObjectListFnAsync<PersistentRole>("\"CIS\".\"_getRolesFn\"", "AF8EBF72-6CA2-4A65-88D0-34B248FE0D6E");
                     var count = await persistentProvider.GetCountObjectListAsync<Employee>(new FilterModel { Filter = $"{nameof(Employee.Name)} = \"Иван\"" });
                     try
                     {

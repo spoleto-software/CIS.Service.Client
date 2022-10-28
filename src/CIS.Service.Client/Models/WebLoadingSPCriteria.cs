@@ -3,7 +3,7 @@
 namespace CIS.Service.Client.Models
 {
     /// <summary>
-    /// The container with full information for loading data from stored procedures with unnamed arguments.
+    /// The container with full information for loading data from stored procedures with unnamed arguments or from table valued functions.
     /// </summary>
     public class WebLoadingSPCriteria
     {
@@ -33,7 +33,7 @@ namespace CIS.Service.Client.Models
         }
 
         /// <summary>
-        /// Gets or sets the stored procedure name.
+        /// Gets or sets the stored procedure name or the table valued function.
         /// </summary>
         [JsonPropertyName("SPName")]
         public string SPName { get; set; }
