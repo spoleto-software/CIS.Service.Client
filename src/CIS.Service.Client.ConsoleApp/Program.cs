@@ -88,11 +88,11 @@ namespace CIS.Service.Client.ConsoleApp
                     var count = await persistentProvider.GetCountObjectListAsync<Employee>(new FilterModel { Filter = $"{nameof(Employee.Name)} = \"Иван\"" });
                     try
                     {
-                        await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
+                        //await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
 
-                        await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), new Dictionary<string, object> { { nameof(OnlineOrderBase.DeliveryAddress), "Россия, г Москва, 123, д 123, кв 12345678" } });
+                        //await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), new Dictionary<string, object> { { nameof(OnlineOrderBase.DeliveryAddress), "Россия, г Москва, 123, д 123, кв 12345678" } });
 
-                        await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), () => new OnlineOrderBase { DeliveryAddress = "Россия, г Москва, 123, д 123, кв 12345678" });
+                        //await persistentProvider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), () => new OnlineOrderBase { DeliveryAddress = "Россия, г Москва, 123, д 123, кв 12345678" });
 
                     }
                     catch (Exception e)
@@ -100,7 +100,7 @@ namespace CIS.Service.Client.ConsoleApp
 
                     }
 
-                    var countryList = await persistentProvider.LoadObjectListAsync<Country>();
+                    var countryList = await persistentProvider.LoadObjectListAsync<Country>(new SearchModel { Order = nameof(Country.AccCode)});
                     var clientPersonInfos = await persistentProvider.LoadObjectListAsync<ClientPersonInfo>(new SearchModel { Filter = $@"{nameof(ClientPersonInfo.Identity)} == Guid.Parse(""44413022-36FB-4F84-84E4-98D237BF0D2D"")" });
                     var returnSlips = await persistentProvider.LoadObjectListAsync<ReturnSlip>(new SearchModel { Filter = $@"{nameof(ReturnSlip.AdditionalStateId)} == Guid.Parse(""79247678-11CB-E611-A97B-0050568329F0"")" });
 
