@@ -22,7 +22,7 @@ namespace CIS.Service.Client.Services
 
         Task<List<T>> LoadObjectListSPAsync<T>(string spName, Dictionary<string, object> namedArgs) where T : IdentityObject;
 
-        Task<List<T>> LoadObjectListFnAsync<T>(string spName, params object[] args) where T : IdentityObject;
+        Task<List<T>> LoadObjectListFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;
 
         Task<T> CreateAsync<T>(T creatingObject) where T : IdentityObject;
 

@@ -20,7 +20,7 @@ namespace CIS.Service.Client.Services
 
         Task<List<ContainerModel<T>>> LoadObjectListSPAsync<T>(string spName, Dictionary<string, object> namedArgs) where T : IBody;
 
-        Task<List<ContainerModel<T>>> LoadObjectListFnAsync<T>(string spName, params object[] args) where T : IBody;
+        Task<List<ContainerModel<T>>> LoadObjectListFnAsync<T>(string funcName, params object[] args) where T : IBody;
 
         Task<ContainerModel<T>> CreateAsync<T>(ContainerModel<T> creatingObject) where T : IBody;
 
