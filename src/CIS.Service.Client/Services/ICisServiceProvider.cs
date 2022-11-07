@@ -22,6 +22,8 @@ namespace CIS.Service.Client.Services
 
         Task<List<ContainerModel<T>>> LoadObjectListFnAsync<T>(string funcName, params object[] args) where T : IBody;
 
+        Task<List<ContainerModel<T>>> LoadObjectListCodeFnAsync<T>(string funcName, params object[] args) where T : IBody;
+
         Task<ContainerModel<T>> CreateAsync<T>(ContainerModel<T> creatingObject) where T : IBody;
 
         Task<ContainerModel<T>> ReadAsync<T>(Guid id) where T : IBody;

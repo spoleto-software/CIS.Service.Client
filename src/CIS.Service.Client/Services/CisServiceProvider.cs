@@ -90,6 +90,19 @@ namespace CIS.Service.Client.Services
             return objList;
         }
 
+        public async Task<List<ContainerModel<T>>> LoadObjectListCodeFnAsync<T>(string funcName, params object[] args) where T : IBody
+        {
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/LoadObjectListCodeFn/{typeof(T).Name}");
+
+            var webCriteria = new WebLoadingSPCriteria(funcName, args);
+            var jsonModel = JsonHelper.ToJson(webCriteria);
+
+            var objList = await InvokeAsync<List<ContainerModel<T>>>(Settings, uri, HttpMethod.Post, jsonModel);
+            objList = _converter.ReadConvert(objList);
+
+            return objList;
+        }
+
         public async Task<ContainerModel<T>> CreateAsync<T>(ContainerModel<T> creatingObject) where T : IBody
         {
             var relativeUri = $"{_controllerName}";

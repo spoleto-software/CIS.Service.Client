@@ -82,10 +82,14 @@ namespace CIS.Service.Client.ConsoleApp
                     var provider = services.GetRequiredService<ICisServiceProvider>();
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
-                    
-                    var roles1 = await provider.LoadObjectListFnAsync<PersistentRole>("\"CIS\".\"_getRolesFn\"", "AF8EBF72-6CA2-4A65-88D0-34B248FE0D6E");
+
+                    var newNumber1 = await persistentProvider.LoadObjectListCodeFnAsync<ObjectNumber>("GetNewNumber", "BaseSlip", false, 1);
+                    var newNumber2 = await provider.LoadObjectListCodeFnAsync<ObjectNumber>("GetNewNumber", "BaseSlip", false, 1);
+
+                    var roles1 = await provider.LoadObjectListSPAsync<PersistentRole>("\"CIS\".\"_getRolesFn\"", "AF8EBF72-6CA2-4A65-88D0-34B248FE0D6E");
                     var roles2 = await persistentProvider.LoadObjectListFnAsync<PersistentRole>("\"CIS\".\"_getRolesFn\"", "AF8EBF72-6CA2-4A65-88D0-34B248FE0D6E");
                     var count = await persistentProvider.GetCountObjectListAsync<Employee>(new FilterModel { Filter = $"{nameof(Employee.Name)} = \"Иван\"" });
+                    var languages = await persistentProvider.LoadObjectListAsync<Language>();
                     try
                     {
                         //await persistentProvider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());

@@ -18,11 +18,40 @@ namespace CIS.Service.Client.Services
 
         Task<List<T>> LoadObjectListAsync<T>(SearchModel searchModel = null) where T : IdentityObject;
 
+        /// <summary>
+        /// Loading the object list from Stored Procedures
+        /// </summary>
+        /// <remarks>
+        /// It works on MS SQL.
+        /// </remarks>
+        /// <param name="spName">The name of Stored Procedure.</param>
+        /// <param name="args">Unnamed params.</param>
+        /// <returns>The persistent object list of specified class.</returns>
         Task<List<T>> LoadObjectListSPAsync<T>(string spName, params object[] args) where T : IdentityObject;
 
+        /// <summary>
+        /// Loading the object list from Stored Procedures
+        /// </summary>
+        /// <remarks>
+        /// It works on MS SQL.
+        /// </remarks>
+        /// <param name="spName">The name of Stored Procedure.</param>
+        /// <param name="namedArgs">Params name with values</param>
+        /// <returns>The persistent object list of specified class.</returns>
         Task<List<T>> LoadObjectListSPAsync<T>(string spName, Dictionary<string, object> namedArgs) where T : IdentityObject;
 
+        /// <summary>
+        /// Loading the persistent object list of specified class from Table Valued Function.
+        /// </summary>
+        /// <param name="funcName">The name of Table Valued Function</param>
+        /// <param name="args">The arguments of Table Valued Function.</param>
+        /// <returns>The persistent object list of specified class.</returns>
         Task<List<T>> LoadObjectListFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;
+
+        /// <summary>
+        /// Async loading the persistent object list of specified class from the specified function on C# code.
+        /// </summary>
+        Task<List<T>> LoadObjectListCodeFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;
 
         Task<T> CreateAsync<T>(T creatingObject) where T : IdentityObject;
 
