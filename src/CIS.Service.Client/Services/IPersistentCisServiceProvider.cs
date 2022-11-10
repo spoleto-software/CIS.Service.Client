@@ -63,6 +63,16 @@ namespace CIS.Service.Client.Services
         /// </summary>
         Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
 
+        /// <summary>
+        /// Async loads the object value of specified column list from the data source.
+        /// </summary>
+        Task<List<TV>> LoadObjectValueListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel);
+
+        /// <summary>
+        /// Async loads the list of the object value of specified column with correspoing identity from the data source.
+        /// </summary>
+        Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel);
+
         Task<T> CreateAsync<T>(T creatingObject) where T : IdentityObject;
 
         Task<T> ReadAsync<T>(Guid id) where T : IdentityObject;

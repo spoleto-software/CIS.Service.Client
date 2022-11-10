@@ -102,6 +102,26 @@ namespace CIS.Service.Client.ConsoleApp
                         Distinct = true
                     });
 
+                    var employeeValueList2 = await persistentProvider.LoadObjectValueListAsync<string>(nameof(OnlineOrderBase),
+                        new ValueSearchModel
+                        {
+                            Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
+                            //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Distinct = true
+                        });
+
+                    var employeeValueKeyList2 = await persistentProvider.LoadObjectValueKeyListAsync<string>(nameof(OnlineOrderBase),
+                        new ValueSearchModel
+                        {
+                            Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
+                            //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                            Distinct = true
+                        });
+
                     var goodThingList = await persistentProvider.LoadObjectListAsync<GoodThingInfo>(new SearchModel
                     {
                         Filter = $"{nameof(GoodThingInfo.Code)} = \"12463093\"",

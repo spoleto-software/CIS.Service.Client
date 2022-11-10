@@ -108,12 +108,18 @@ namespace CIS.Service.Client.Services
             return objList;
         }
 
-        public async Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+        public Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+            => LoadObjectValueListAsync<TV>(typeof(TFrom).Name, valueSearchModel);
+
+        public Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+            => LoadObjectValueKeyListAsync<TV>(typeof(TFrom).Name, valueSearchModel);
+
+        public async Task<List<TV>> LoadObjectValueListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel)
         {
             if (valueSearchModel == null)
                 throw new ArgumentNullException(nameof(valueSearchModel));
 
-            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(TFrom).Name}/LoadObjectValueListSimple");
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{objectClassName}/LoadObjectValueListSimple");
 
             var jsonModel = JsonHelper.ToJson(valueSearchModel);
 
@@ -122,12 +128,12 @@ namespace CIS.Service.Client.Services
             return objList;
         }
 
-        public async Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+        public async Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel)
         {
             if (valueSearchModel == null)
                 throw new ArgumentNullException(nameof(valueSearchModel));
 
-            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(TFrom).Name}/LoadObjectValueKeyListSimple");
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{objectClassName}/LoadObjectValueKeyListSimple");
 
             var jsonModel = JsonHelper.ToJson(valueSearchModel);
 
