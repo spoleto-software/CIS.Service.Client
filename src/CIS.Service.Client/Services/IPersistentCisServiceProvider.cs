@@ -19,7 +19,7 @@ namespace CIS.Service.Client.Services
         Task<List<T>> LoadObjectListAsync<T>(SearchModel searchModel = null) where T : IdentityObject;
 
         /// <summary>
-        /// Loading the object list from Stored Procedures
+        /// Async loading the object list from Stored Procedures
         /// </summary>
         /// <remarks>
         /// It works on MS SQL.
@@ -30,7 +30,7 @@ namespace CIS.Service.Client.Services
         Task<List<T>> LoadObjectListSPAsync<T>(string spName, params object[] args) where T : IdentityObject;
 
         /// <summary>
-        /// Loading the object list from Stored Procedures
+        /// Async loading the object list from Stored Procedures
         /// </summary>
         /// <remarks>
         /// It works on MS SQL.
@@ -41,7 +41,7 @@ namespace CIS.Service.Client.Services
         Task<List<T>> LoadObjectListSPAsync<T>(string spName, Dictionary<string, object> namedArgs) where T : IdentityObject;
 
         /// <summary>
-        /// Loading the persistent object list of specified class from Table Valued Function.
+        /// Async loading the persistent object list of specified class from Table Valued Function.
         /// </summary>
         /// <param name="funcName">The name of Table Valued Function</param>
         /// <param name="args">The arguments of Table Valued Function.</param>
@@ -52,6 +52,16 @@ namespace CIS.Service.Client.Services
         /// Async loading the persistent object list of specified class from the specified function on C# code.
         /// </summary>
         Task<List<T>> LoadObjectListCodeFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;
+
+        /// <summary>
+        /// Async loads the object value of specified column list from the data source.
+        /// </summary>
+        Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
+        
+        /// <summary>
+        /// Async loads the list of the object value of specified column with correspoing identity from the data source.
+        /// </summary>
+        Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
 
         Task<T> CreateAsync<T>(T creatingObject) where T : IdentityObject;
 

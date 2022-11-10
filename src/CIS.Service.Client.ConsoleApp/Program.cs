@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CIS.Service.Client.Helpers;
 using CIS.Service.Client.Models;
@@ -82,6 +83,33 @@ namespace CIS.Service.Client.ConsoleApp
                     var provider = services.GetRequiredService<ICisServiceProvider>();
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
+
+                    var employeeValueList = await persistentProvider.LoadObjectValueListAsync<string, OnlineOrderBase>(new ValueSearchModel
+                    {
+                        Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
+                        //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Distinct = true
+                    });
+
+                    var employeeValueKeyList = await persistentProvider.LoadObjectValueKeyListAsync<string, OnlineOrderBase>(new ValueSearchModel
+                    {
+                        Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
+                        //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Distinct = true
+                    });
+
+                    var goodThingList = await persistentProvider.LoadObjectListAsync<GoodThingInfo>(new SearchModel
+                    {
+                        Filter = $"{nameof(GoodThingInfo.Code)} = \"12463093\"",
+                        //GroupBy = $"{nameof(GoodThingInfo.TrademarkId)},{nameof(GoodThingInfo.ColorId)}",
+                        Order = $"{nameof(GoodThingInfo.TrademarkId)},{nameof(GoodThingInfo.ColorId)}",
+                        Select = $"{nameof(GoodThingInfo.TrademarkId)},{nameof(GoodThingInfo.ColorId)}"
+                    });
+
 
                     var newNumber1 = await persistentProvider.LoadObjectListCodeFnAsync<ObjectNumber>("GetNewNumber", "BaseSlip", false, 1);
                     var newNumber2 = await provider.LoadObjectListCodeFnAsync<ObjectNumber>("GetNewNumber", "BaseSlip", false, 1);

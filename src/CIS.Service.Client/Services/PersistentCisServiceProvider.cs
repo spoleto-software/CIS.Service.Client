@@ -108,6 +108,34 @@ namespace CIS.Service.Client.Services
             return objList;
         }
 
+        public async Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+        {
+            if (valueSearchModel == null)
+                throw new ArgumentNullException(nameof(valueSearchModel));
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(TFrom).Name}/LoadObjectValueListSimple");
+
+            var jsonModel = JsonHelper.ToJson(valueSearchModel);
+
+            var objList = await InvokeAsync<List<TV>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return objList;
+        }
+
+        public async Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+        {
+            if (valueSearchModel == null)
+                throw new ArgumentNullException(nameof(valueSearchModel));
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(TFrom).Name}/LoadObjectValueKeyListSimple");
+
+            var jsonModel = JsonHelper.ToJson(valueSearchModel);
+
+            var objList = await InvokeAsync<List<ObjectValue<TV>>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return objList;
+        }
+
         public async Task<T> CreateAsync<T>(T creatingObject) where T : IdentityObject
         {
             var relativeUri = $"{_controllerName}/{typeof(T).Name}";
