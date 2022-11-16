@@ -84,21 +84,39 @@ namespace CIS.Service.Client.ConsoleApp
                     var persistentProvider = services.GetRequiredService<IPersistentCisServiceProvider>();
                     //var employee = await provider.LoadObjectByFilter<Employee>(new SearchModel { Filter=$"{nameof(Employee.Name)} != \"test\""});
 
-                    var employeeValueList = await persistentProvider.LoadObjectValueListAsync<string, OnlineOrderBase>(new ValueSearchModel
+                    //var materialNames = await persistentProvider.LoadObjectListAsync<MaterialName>(new SearchModel { Filter= "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+                    var materialNameList = await persistentProvider.LoadObjectValueListAsync<string, MaterialName>(new ValueSearchModel
                     {
-                        Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
-                        //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
-                        Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
-                        Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Order = $"SqlEx.SimplifyString(Label, \"ru\") DESC", // {nameof(MaterialName.Name)}
+                        Column = $"SqlEx.SimplifyString(Label, \"ru\")",
+                        Rows = 10,
                         Distinct = true
                     });
+
+                    var materialNameKeyList = await persistentProvider.LoadObjectValueKeyListAsync<string, MaterialName>(new ValueSearchModel
+                    {
+                        Order = $"SqlEx.SimplifyString(Label, \"ru\") DESC", // {nameof(MaterialName.Name)}
+                        Column = $"SqlEx.SimplifyString(Label, \"ru\")",
+                        Rows = 10,
+                        Distinct = true
+                    });
+
+                    //var employeeValueList = await persistentProvider.LoadObjectValueListAsync<string, OnlineOrderBase>(new ValueSearchModel
+                    //{
+                    //    Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
+                    //    //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                    //    Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                    //    Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                    //    Distinct = true
+                    //});
 
                     var employeeValueKeyList = await persistentProvider.LoadObjectValueKeyListAsync<string, OnlineOrderBase>(new ValueSearchModel
                     {
                         Filter = $"{nameof(OnlineOrderBase.Number)} = 67529 OR {nameof(OnlineOrderBase.Number)} = 27103 OR {nameof(OnlineOrderBase.Number)} = 19524",
                         //GroupBy = $"{nameof(OnlineOrderBase.Employee)}.Label",
-                        Order = $"{nameof(OnlineOrderBase.Employee)}.Label",
-                        Column = $"{nameof(OnlineOrderBase.Employee)}.Label",
+                        Order = $"SqlEx.SimplifyString({nameof(OnlineOrderBase.Employee)}.Label, \"ru\")",
+                        Column = $"SqlEx.SimplifyString({nameof(OnlineOrderBase.Employee)}.Label, \"ru\")",
                         Distinct = true
                     });
 

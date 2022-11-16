@@ -119,9 +119,15 @@ namespace CIS.Service.Client.Services
             if (valueSearchModel == null)
                 throw new ArgumentNullException(nameof(valueSearchModel));
 
+            var valueSearchCriteria = new ValueSearchCriteria
+            {
+                SearchModel = valueSearchModel,
+                ColumnType = new WebType(typeof(TV))
+            };
+
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{objectClassName}/LoadObjectValueListSimple");
 
-            var jsonModel = JsonHelper.ToJson(valueSearchModel);
+            var jsonModel = JsonHelper.ToJson(valueSearchCriteria);
 
             var objList = await InvokeAsync<List<TV>>(Settings, uri, HttpMethod.Post, jsonModel);
 
@@ -133,9 +139,15 @@ namespace CIS.Service.Client.Services
             if (valueSearchModel == null)
                 throw new ArgumentNullException(nameof(valueSearchModel));
 
+            var valueSearchCriteria = new ValueSearchCriteria
+            {
+                SearchModel = valueSearchModel,
+                ColumnType = new WebType(typeof(TV))
+            };
+
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{objectClassName}/LoadObjectValueKeyListSimple");
 
-            var jsonModel = JsonHelper.ToJson(valueSearchModel);
+            var jsonModel = JsonHelper.ToJson(valueSearchCriteria);
 
             var objList = await InvokeAsync<List<ObjectValue<TV>>>(Settings, uri, HttpMethod.Post, jsonModel);
 
