@@ -3,6 +3,12 @@ name: Publish Packages
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/CIS.Service.Client/**'
+      - 'LICENSE'
+      - 'README.md'
+  pull_request:
+    branches: [ main ]
 
 jobs:
   build:
