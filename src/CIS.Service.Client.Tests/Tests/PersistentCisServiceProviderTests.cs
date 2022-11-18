@@ -575,7 +575,6 @@ namespace CIS.Service.Client.Tests.Tests
             // Arrange
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
 
-
             // Assert
             Assert.Throws<NotFoundException>(async () =>
             {
