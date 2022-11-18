@@ -1,7 +1,7 @@
 ﻿using System;
 using CIS.Service.Client.Interfaces;
 
-namespace CIS.Service.Client.ConsoleApp
+namespace CIS.Service.Client.Tests.Models
 {
     internal class GoodThingInfo : IdentityObject, IBody
     {

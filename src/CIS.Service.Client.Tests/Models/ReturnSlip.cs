@@ -1,4 +1,4 @@
-﻿namespace CIS.Service.Client.ConsoleApp
+﻿namespace CIS.Service.Client.Tests.Models
 {
     public class ReturnSlip : SaleSlip
     {

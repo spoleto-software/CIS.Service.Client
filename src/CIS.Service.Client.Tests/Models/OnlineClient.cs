@@ -1,6 +1,6 @@
 ﻿using CIS.Service.Client.Interfaces;
 
-namespace CIS.Service.Client.ConsoleApp
+namespace CIS.Service.Client.Tests.Models
 {
     public class OnlineClient : IdentityObject, IBody
     {

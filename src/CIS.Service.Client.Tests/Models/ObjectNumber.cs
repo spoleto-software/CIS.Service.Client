@@ -1,7 +1,7 @@
 ﻿using CIS.Service.Client.Interfaces;
 using System;
 
-namespace CIS.Service.Client.ConsoleApp
+namespace CIS.Service.Client.Tests.Models
 {
     public class ObjectNumber : IdentityObject, IBody
     {

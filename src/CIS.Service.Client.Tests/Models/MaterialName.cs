@@ -1,7 +1,7 @@
 ﻿using CIS.Service.Client.Interfaces;
 using Core.Common;
 
-namespace CIS.Service.Client.ConsoleApp
+namespace CIS.Service.Client.Tests.Models
 {
     public class MaterialName : IdentityObject, IBody
     {
