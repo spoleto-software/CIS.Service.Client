@@ -2,6 +2,7 @@
 using CIS.Service.Client.Models;
 using CIS.Service.Client.Services;
 using CIS.Service.Client.Tests.Models;
+using Core.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CIS.Service.Client.Tests.Tests
@@ -20,7 +21,7 @@ namespace CIS.Service.Client.Tests.Tests
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
 
             // Act
-            var materialNameList = await provider.LoadObjectValueListAsync<string, MaterialName>(new ValueSearchModel
+            var materialNameList = await provider.LoadObjectValueListAsync<LocalizableString, MaterialName>(new ValueSearchModel
             {
                 Order = $"{nameof(MaterialName.Name)} DESC",
                 Column = $"{nameof(MaterialName.Name)}",
@@ -51,7 +52,7 @@ namespace CIS.Service.Client.Tests.Tests
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
 
             // Act
-            var materialNameList = await provider.LoadObjectValueListAsync<string, MaterialName>(new ValueSearchModel
+            var materialNameList = await provider.LoadObjectValueListAsync<LocalizableString, MaterialName>(new ValueSearchModel
             {
                 Order = $"Label",
                 Column = $"Label",
@@ -82,7 +83,7 @@ namespace CIS.Service.Client.Tests.Tests
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
 
             // Act
-            var materialNameList = await provider.LoadObjectValueKeyListAsync<string, MaterialName>(new ValueSearchModel
+            var materialNameList = await provider.LoadObjectValueKeyListAsync<LocalizableString, MaterialName>(new ValueSearchModel
             {
                 Order = $"{nameof(MaterialName.Name)} DESC",
                 Column = $"{nameof(MaterialName.Name)}",
@@ -113,7 +114,7 @@ namespace CIS.Service.Client.Tests.Tests
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
 
             // Act
-            var materialNameList = await provider.LoadObjectValueKeyListAsync<string, MaterialName>(new ValueSearchModel
+            var materialNameList = await provider.LoadObjectValueKeyListAsync<LocalizableString, MaterialName>(new ValueSearchModel
             {
                 Order = $"Label",
                 Column = $"Label",
@@ -539,19 +540,24 @@ namespace CIS.Service.Client.Tests.Tests
         }
 
         [Test]
-        public void DeleteWithExceptionBySaleSlipInternetOrder()
+        public async Task DeleteWithExceptionBySaleSlipInternetOrder()
         {
             // Arrange
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var isException = false;
 
+            // Act
+            try
+            {
+                await provider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
+            }
+            catch (NotFoundException)
+            {
+                isException = true;
+            }
 
             // Assert
-            Assert.Throws<NotFoundException>(async () =>
-            {
-                // Act
-                await provider.DeleteAsync<SaleSlipInternetOrder>(Guid.NewGuid());
-
-            });
+            Assert.That(isException, Is.True);
         }
 
         [Test]
@@ -570,20 +576,27 @@ namespace CIS.Service.Client.Tests.Tests
         }
 
         [Test]
-        public void UpdateWithExceptionBySaleSlipInternetOrder()
+        public async Task UpdateWithExceptionBySaleSlipInternetOrder()
         {
             // Arrange
             var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var isException = false;
 
-            // Assert
-            Assert.Throws<NotFoundException>(async () =>
+            // Act
+            try
             {
-                // Act
                 await provider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), new Dictionary<string, object> { { nameof(OnlineOrderBase.DeliveryAddress), "Россия, г Москва, 123, д 123, кв 12345678" } });
 
                 await provider.UpdateOnlyAsync<OnlineOrderBase>(Guid.Parse("e46b3eed-2d9c-4b34-858f-cace5abc4611"), () => new OnlineOrderBase { DeliveryAddress = "Россия, г Москва, 123, д 123, кв 12345678" });
 
-            });
+            }
+            catch (NotFoundException)
+            {
+                isException = true;
+            }
+
+            // Assert
+            Assert.That(isException, Is.True);
         }
 
         [Test]
