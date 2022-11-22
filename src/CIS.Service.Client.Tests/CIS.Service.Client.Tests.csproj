@@ -32,7 +32,7 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
 		<PackageReference Include="coverlet.collector" Version="3.1.2" />
-		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.19.1008" />
+		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.11.22.1215" />
 	</ItemGroup>
 
 	<ItemGroup>
