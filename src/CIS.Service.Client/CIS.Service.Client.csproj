@@ -52,7 +52,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.11.15.1106" />
+        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.11.22.1201" />
 		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.7.19.1008" />
     </ItemGroup>
 

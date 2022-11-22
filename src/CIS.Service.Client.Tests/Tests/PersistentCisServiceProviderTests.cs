@@ -697,5 +697,21 @@ namespace CIS.Service.Client.Tests.Tests
             // Assert
             Assert.Pass();
         }
+
+        [Test]
+        public async Task LoadObjectListWithEmptyLSByMaterial()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+
+            // Act
+            var materialList = await provider.LoadObjectListAsync<Material>(new SearchModel { Filter = $"{nameof(Material.Identity)}  == Guid.Parse(\"d9d4c357-af4a-4a2f-9ca8-efdd91a33de1\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(materialList, Is.Not.Null);
+            });
+        }
     }
 }
