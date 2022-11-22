@@ -24,7 +24,7 @@
 		<PackageId>Spoleto.CIS.Service.Client</PackageId>
 		<Authors>OlegNadymov;Spoleto-Software</Authors>
 		<Company>SPOLETO Software Development</Company>
-		<PackageIcon>MainIcon.png</PackageIcon>
+		<PackageIcon>MainIcon.jpg</PackageIcon>
 		<PackageProjectUrl>https://spoleto.ru</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/spoleto-software/CIS.Service.Client</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
@@ -43,7 +43,7 @@
           <Pack>True</Pack>
           <PackagePath>\</PackagePath>
         </None>
-        <None Include="Resources\MainIcon.png">
+        <None Include="Resources\MainIcon.jpg">
             <Pack>True</Pack>
             <PackagePath></PackagePath>
         </None>
