@@ -713,5 +713,65 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(materialList, Is.Not.Null);
             });
         }
+
+        /// <summary>
+        /// Label has constants in the expressions.<br/>
+        /// These constants are translated to SQL as parameters.<br/>
+        /// SQL builder must keep the same parameters in Select, GroupBy, OrderBy parts!
+        /// </summary>
+        /// <returns></returns>
+        [Test]
+        public async Task LoadObjectValueKeyListWithComplexLabelByManufacturerOfTrademark()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+
+            // Act
+            var objKeyList1 = await provider.LoadObjectValueKeyListAsync<string>(nameof(ManufacturerOfTrademark),
+                new()
+                {
+                    Rows = 10,
+                    Column = "Label",
+                    GroupBy = "Label"
+                });
+
+            var objKeyList2 = await provider.LoadObjectValueKeyListAsync<string>(nameof(ManufacturerOfTrademark),
+                new()
+                {
+                    Rows = 10,
+                    Column = "Label",
+                    Distinct = true
+                });
+
+
+            var objKeyList3 = await provider.LoadObjectValueKeyListAsync<string>(nameof(ManufacturerOfTrademark),
+                new()
+                {
+                    Rows = 10,
+                    Column = "Label",
+                    Order = "Label",
+                    Distinct = true
+                });
+
+
+            var objKeyList4 = await provider.LoadObjectValueKeyListAsync<string>(nameof(ManufacturerOfTrademark),
+                new()
+                {
+                    Rows = 10,
+                    Column = "Label",
+                    GroupBy = "Label",
+                    Order = "Label",
+                    Distinct = true
+                });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(objKeyList1, Is.Not.Null);
+                Assert.That(objKeyList2, Is.Not.Null);
+                Assert.That(objKeyList3, Is.Not.Null);
+                Assert.That(objKeyList4, Is.Not.Null);
+            });
+        }
     }
 }
