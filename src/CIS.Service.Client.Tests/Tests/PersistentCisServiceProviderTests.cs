@@ -773,5 +773,24 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(objKeyList4, Is.Not.Null);
             });
         }
+
+        [Test]
+        public async Task BulkInsertByLanguage()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var objList = new List<Language>
+            {
+                new() { Identity = Guid.NewGuid(), Code = "tt1", Name = "test1", Order = 123456789 },
+                new() { Identity = Guid.NewGuid(), Code = "tt2", Name = "test2", Order = 123456789 },
+                new() { Identity = Guid.NewGuid(), Code = "tt3", Name = "test3", Order = 123456789 }
+            };
+
+            // Act
+            await provider.BulkInsertAsync(objList);
+
+            // Assert
+            Assert.Pass(); // no exceptions mean it works well.
+        }
     }
 }

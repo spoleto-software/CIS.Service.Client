@@ -256,5 +256,14 @@ namespace CIS.Service.Client.Services
             var result = await InvokeAsync<string>(Settings, uri, HttpMethod.Post, jsonModel);
             return result;
         }
+
+        public async Task BulkInsertAsync<T>(List<T> creatingObjectList) where T : IdentityObject
+        {
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_controllerName}/{typeof(T).Name}/BulkInsertSimple");
+
+            var jsonModel = JsonHelper.ToJson(creatingObjectList);
+
+            await InvokeAsync<object>(Settings, uri, HttpMethod.Post, jsonModel);
+        }
     }
 }

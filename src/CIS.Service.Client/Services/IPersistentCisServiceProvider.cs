@@ -110,5 +110,15 @@ namespace CIS.Service.Client.Services
         ///     
         /// </remarks>
         Task<string> ExecuteAsync<T>(Expression<Func<T>> obj, string methodName, params object[] args) where T : IdentityObject;
+
+        /// <summary>
+        /// Fast insertion of objects into the database.
+        /// </summary>
+        /// <remarks>
+        /// MS SQL uses SqlBulkCopy.<br/>
+        /// PostgreSQL uses COPY FROM STDIN (FORMAT BINARY).<br/>
+        /// Other dialect providers have fallback as foreach (Insert).
+        /// </remarks>
+        Task BulkInsertAsync<T>(List<T> creatingObjectList) where T : IdentityObject;
     }
 }
