@@ -4,6 +4,7 @@ using CIS.Service.Client.Services;
 using CIS.Service.Client.Tests.Models;
 using Core.Common;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Rest.Azure.OData;
 
 namespace CIS.Service.Client.Tests.Tests
 {
@@ -791,6 +792,33 @@ namespace CIS.Service.Client.Tests.Tests
 
             // Assert
             Assert.Pass(); // no exceptions mean it works well.
+        }
+
+        //https://d-fens.ch/2017/03/01/converting-odataqueryoptions-into-linq-expressions-in-c/
+        //https://stackoverflow.com/questions/16445062/how-to-transform-odata-filter-to-a-linq-expression/16447514#16447514
+        //https://stackoverflow.com/questions/55307370/how-to-take-odata-queryable-web-api-endpoint-filter-and-map-it-from-dto-object/55344775#55344775
+        [Test]
+        public void ODataTest()
+        {
+            // Arrange
+            var oDataCriteria = new ODataQuery<Language>(x => x.Order == 1 && x.Name.Contains("test"))
+            {
+                OrderBy = "Name",
+                Top = 100,
+                Skip = 0,
+                Expand = "Model"
+            };
+
+            // Act
+            var filter = oDataCriteria.Filter;
+            var toString = oDataCriteria.ToString();
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(filter, Is.EqualTo("Order eq 1 and Name/any(c: c eq 'test')"));
+                Assert.That(toString, Is.EqualTo("$filter=Order eq 1 and Name/any(c: c eq 'test')&$orderby=Name&$expand=Model&$top=100&$skip=0"));
+            });
         }
     }
 }
