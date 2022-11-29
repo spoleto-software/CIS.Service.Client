@@ -820,5 +820,38 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(toString, Is.EqualTo("$filter=Order eq 1 and Name/any(c: c eq 'test')&$orderby=Name&$expand=Model&$top=100&$skip=0"));
             });
         }
+
+        [Test]
+        public async Task ExecuteSPTest()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var classParams = new Dictionary<string, object>
+                {
+                    {"orderedmodels", "[]" },
+                    {"idmodel", Guid.Parse("ada17bd3-bf9e-4b69-81d3-6a2aacd31644")},
+                    {"idcolor", Guid.Parse("d494b555-9c20-4375-9e17-73fc738ec9ce")},
+                    {"colorcode", "P30"},
+                    {"idshop", Guid.Parse("9b2537e1-c9d0-47a5-a115-3cd82c385cd6")},
+                    {"sizes", "[{\"idsize\":\"2dc72726-4f85-4c6a-944d-b6f7dc5811ac\",\"cnt\":0}]" },
+                    {"idstate", Guid.Parse("1df01cea-7d47-48bc-b19c-56ac510b02a3")},
+                    {"idorder", Guid.Parse("b3fa0896-8b2d-4fb0-a2ad-7adf7ecd523e")},
+                    {"price", 294D},
+                    {"idcurrency", Guid.Parse("0e251393-ba0f-4704-9001-c6a0e36b248f")},
+                    {"dateinput", DateTime.Now},
+                    {"tmp_kit", null},
+                    {"idrow", Guid.Parse("04c880d3-90bb-487a-b82a-2d8c4a6151fb")},
+                    {"photonum", (string)null},
+                    {"custom_filter_string", (string)null},
+                    {"is_need_rfid", false },
+                    {"idcountry", (string)null}
+                };
+
+            // Act
+            await provider.ExecuteSPAsync<EmptyResult>("\"_updateOrderedModel\"", classParams);
+
+            // Assert
+            Assert.Pass();
+        }
     }
 }
