@@ -841,10 +841,10 @@ namespace CIS.Service.Client.Tests.Tests
                     {"dateinput", DateTime.Now},
                     {"tmp_kit", null},
                     {"idrow", Guid.Parse("04c880d3-90bb-487a-b82a-2d8c4a6151fb")},
-                    {"photonum", (string)null},
-                    {"custom_filter_string", (string)null},
+                    {"photonum", null},
+                    {"custom_filter_string", null},
                     {"is_need_rfid", false },
-                    {"idcountry", (string)null}
+                    {"idcountry", null}
                 };
 
             // Act
