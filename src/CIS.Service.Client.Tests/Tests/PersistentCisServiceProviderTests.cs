@@ -853,5 +853,36 @@ namespace CIS.Service.Client.Tests.Tests
             // Assert
             Assert.Pass();
         }
+
+        [Test]
+        public async Task LoadObjectValueKeyListWithFuncInColumnByColorParent()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+
+            // Act
+            var colorList = await provider.LoadObjectValueKeyListAsync<LocalizableString, Color>(new ValueSearchModel
+            {
+                Order = $"{nameof(Color.Parent)}.{nameof(Color.Name)} DESC",
+                Column = $"{nameof(Color.Parent)}.{nameof(Color.Name)}",
+                Rows = 10,
+                Distinct = true
+            });
+
+            var colorListWithFunc = await provider.LoadObjectValueKeyListAsync<string, Color>(new ValueSearchModel
+            {
+                Order = $"SqlEx.SimplifyString({nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\") DESC",
+                Column = $"SqlEx.SimplifyString({nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\")",
+                Rows = 10,
+                Distinct = true
+            });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(colorList, Is.Not.Null);
+                Assert.That(colorListWithFunc, Is.Not.Null);
+            });
+        }
     }
 }
