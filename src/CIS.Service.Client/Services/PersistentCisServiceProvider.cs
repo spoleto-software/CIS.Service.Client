@@ -169,7 +169,7 @@ namespace CIS.Service.Client.Services
             var relativeUri = $"{_controllerName}/{typeof(T).Name}/{id:D}";
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), relativeUri);
 
-            var obj = await InvokeAsync<T>(Settings, uri, HttpMethod.Get);
+            var obj = await InvokeAsync<T>(Settings, uri, HttpMethod.Get, throwIfNotFound: false);
             if (obj == null)
                 return null;
 
