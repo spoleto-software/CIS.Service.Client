@@ -863,16 +863,16 @@ namespace CIS.Service.Client.Tests.Tests
             // Act
             var colorList = await provider.LoadObjectValueKeyListAsync<LocalizableString, Color>(new ValueSearchModel
             {
-                Order = $"{nameof(Color.Parent)}.{nameof(Color.Name)} DESC",
-                Column = $"{nameof(Color.Parent)}.{nameof(Color.Name)}",
+                Order = $"@{nameof(Color.Parent)}.{nameof(Color.Name)} DESC",
+                Column = $"@{nameof(Color.Parent)}.{nameof(Color.Name)}",
                 Rows = 10,
                 Distinct = true
             });
 
             var colorListWithFunc = await provider.LoadObjectValueKeyListAsync<string, Color>(new ValueSearchModel
             {
-                Order = $"SqlEx.SimplifyString({nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\") DESC",
-                Column = $"SqlEx.SimplifyString({nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\")",
+                Order = $"SqlEx.SimplifyString(@{nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\") DESC",
+                Column = $"SqlEx.SimplifyString(@{nameof(Color.Parent)}.{nameof(Color.Name)}, \"ru\")",
                 Rows = 10,
                 Distinct = true
             });
@@ -883,6 +883,52 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(colorList, Is.Not.Null);
                 Assert.That(colorListWithFunc, Is.Not.Null);
             });
+        }
+
+        [Test]
+        public async Task ReadByOrderedModel()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var randomId = Guid.NewGuid();
+
+            // Act
+            var orderedModel = await provider.ReadAsync<OrderedModel>(randomId);
+
+            // Assert
+            Assert.That(orderedModel, Is.Null);
+        }
+
+        [Test]
+        public async Task ReadByOrder()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var orderId = Guid.Parse("8335bf5b-10ef-4cdd-97ae-fe63f551d81a");
+
+            // Act
+            var orderedModel = await provider.ReadAsync<Order>(orderId);
+
+            // Assert
+            Assert.Pass();
+        }
+
+        [Test]
+        public async Task LoadObjectListWithSqlExInByShop()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var filter = "SqlEx.In(Identity, new Guid[] { Guid.Parse(\"c39605e0-0b87-4a26-bcef-8c88abfbe4d3\") })";
+
+            // Act
+            var shops = await provider.LoadObjectListAsync<Shop>(new SearchModel
+            {
+                Filter = filter,
+                Select = $"{nameof(Shop.Identity)}, {nameof(Shop.FullName)}"
+            });
+
+            // Assert
+            Assert.Pass();
         }
     }
 }
