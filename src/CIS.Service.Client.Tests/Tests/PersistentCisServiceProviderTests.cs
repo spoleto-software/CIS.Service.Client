@@ -930,5 +930,30 @@ namespace CIS.Service.Client.Tests.Tests
             // Assert
             Assert.Pass();
         }
+
+        [Test]
+        public async Task CreateByLegalPerson()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var legalPerson = new LegalPerson
+            {
+                Name = "ИП Иванов Иван Иваныч Test",
+                Address = "тут адрес",
+                BankRequisites = "р/с xxx в банке",
+                Inn = "123456789123",
+                ShortName = "Иванов Иван Иваныч Test",
+                RefLegalKindId = Guid.Parse("4e2cf109-d825-4dc8-937c-c85c33863b01"),
+                IsResident = true,
+                IsActive = true,
+                FirmAddressId = Guid.Parse("64b2847c-9cac-4f53-a919-caf93fa42b01")
+            };
+
+            // Act
+            var createdLegalPerson = await provider.CreateAsync(legalPerson);
+
+            // Assert
+            Assert.Pass();
+        }
     }
 }
