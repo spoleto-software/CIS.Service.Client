@@ -17,10 +17,17 @@ namespace CIS.Service.Client.Tests.Tests
             var services = new Microsoft.Extensions.DependencyInjection.ServiceCollection();
             services.AddHttpClient();
 
+            services.AddHttpClient(CisServiceNegotiateTokenProvider.NegotiateName)
+                .ConfigurePrimaryHttpMessageHandler(h => new HttpClientHandler
+                {
+                    UseDefaultCredentials = true
+                });
+
             services.AddOptions();
             services.Configure<WebApiOption>(ConfigurationHelper.Configuration.GetSection(nameof(WebApiOption)));
 
-            services.AddSingleton<ICisServiceTokenProvider, CisServiceCredentialsTokenProvider>();
+            //services.AddSingleton<ICisServiceTokenProvider, CisServiceCredentialsTokenProvider>();
+            services.AddSingleton<ICisServiceTokenProvider, CisServiceNegotiateTokenProvider>();
             services.AddSingleton<ICisServiceProvider, CisServiceProvider>();
             services.AddSingleton<IPersistentCisServiceProvider, PersistentCisServiceProvider>();
 

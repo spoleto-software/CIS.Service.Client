@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>net7.0;netstandard2.0</TargetFrameworks>
         <AssemblyName>CIS.Service.Client</AssemblyName>
         <RootNamespace>CIS.Service.Client</RootNamespace>
 		<Title>CIS.Service.Client</Title>
         <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<LangVersion>latest</LangVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
+        <DefineConstants>$(DefineConstants);NETCORE</DefineConstants>
     </PropertyGroup>
 
     <!-- Include symbols for debugging -->
@@ -50,16 +54,16 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
-        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="2.11.22.1201" />
-		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="2.11.22.1215" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+        <PackageReference Include="Spoleto.Core.Common.LocalizableString" Version="3.6.8.1829" />
+		<PackageReference Include="Spoleto.CIS.Service.Client.Interfaces" Version="3.6.8.1835" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netstandard'">
          <!-- Properties for netstandard --> 
         <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-        <PackageReference Include="System.Text.Json" Version="4.7.0" />
+        <PackageReference Include="System.Text.Json" Version="7.0.2" />
     </ItemGroup>
 
 </Project>

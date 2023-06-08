@@ -19,7 +19,7 @@ namespace CIS.Service.Client.Helpers
         {
             _defaultSerializerOptions = new JsonSerializerOptions
             {
-                IgnoreNullValues = true,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 Encoder = _encoder
             };
 
