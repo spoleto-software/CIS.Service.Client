@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Text;
+using CIS.Service.Client.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace CIS.Service.Client.Tests
 {
@@ -16,5 +18,12 @@ namespace CIS.Service.Client.Tests
         }
 
         public static IConfigurationRoot Configuration => _config;
+
+        public static ImpersonatingUser GetImpersonatingUser()
+        {
+            var user = _config.GetSection(nameof(ImpersonatingUser)).Get<ImpersonatingUser>();
+
+            return user;
+        }
     }
 }

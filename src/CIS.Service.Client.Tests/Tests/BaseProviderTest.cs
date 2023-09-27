@@ -30,6 +30,8 @@ namespace CIS.Service.Client.Tests.Tests
             services.AddSingleton<ICisServiceTokenProvider, CisServiceNegotiateTokenProvider>();
             services.AddSingleton<ICisServiceProvider, CisServiceProvider>();
             services.AddSingleton<IPersistentCisServiceProvider, PersistentCisServiceProvider>();
+            services.AddSingleton<IImpersonatingPersistentCisServiceProvider, PersistentCisServiceProvider>();
+            services.AddSingleton<IImpersonatingMetaSystemProvider, PersistentCisServiceProvider>();
 
             _serviceProvider = services.BuildServiceProvider();
         }

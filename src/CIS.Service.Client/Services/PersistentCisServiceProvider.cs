@@ -16,7 +16,7 @@ namespace CIS.Service.Client.Services
     /// <summary>
     /// The default service provider.
     /// </summary>
-    public class PersistentCisServiceProvider : BaseCisServiceProvider, IPersistentCisServiceProvider
+    public partial class PersistentCisServiceProvider : BaseCisServiceProvider, IPersistentCisServiceProvider
     {
         private const string _controllerName = "api/persistent";
 
