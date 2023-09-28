@@ -11,12 +11,15 @@ namespace CIS.Service.Client.Services
 {
     public partial class PersistentCisServiceProvider : IImpersonatingMetaSystemProvider
     {
-        public async Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user) where T : IdentityObject
+        public Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user) where T : IdentityObject
+            => LoadAttributes(user, typeof(T).Name);
+
+        public async Task<List<MetaAttribute>> LoadAttributes(ImpersonatingUser user, string objectClassName)
         {
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
-            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/LoadAttributes");
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{objectClassName}/LoadAttributes");
 
             var jsonModel = JsonHelper.ToJson(user);
 

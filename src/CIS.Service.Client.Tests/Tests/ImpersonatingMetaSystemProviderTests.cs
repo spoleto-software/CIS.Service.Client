@@ -32,6 +32,22 @@ namespace CIS.Service.Client.Tests.Tests
         }
 
         [Test]
+        public async Task LoadAttributesForMaterialNameNonGeneric()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var attributeList = await provider.LoadAttributes(_user, typeof(MaterialName).Name);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(attributeList, Is.Not.Null);
+            });
+        }
+
+        [Test]
         public async Task LoadAttributesForMaterialNameWithContext()
         {
             // Arrange
@@ -55,6 +71,22 @@ namespace CIS.Service.Client.Tests.Tests
 
             // Act
             var attributeList = await provider.LoadAttributes<Employee>(_user);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(attributeList, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadAttributesForEmployeeNonGeneric()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var attributeList = await provider.LoadAttributes(_user, typeof(Employee).Name);
 
             // Assert
             Assert.Multiple(() =>

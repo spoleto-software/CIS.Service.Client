@@ -17,6 +17,11 @@ namespace CIS.Service.Client.Services
         Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user) where T : IdentityObject;
 
         /// <summary>
+        /// Async loads the available attribute list for the specified user.
+        /// </summary>
+        Task<List<MetaAttribute>> LoadAttributes(ImpersonatingUser user, string objectClassName);
+
+        /// <summary>
         /// Async loads the available attribute list for the context object and specified user.
         /// </summary>
         Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user, T contextObject) where T : IdentityObject;
