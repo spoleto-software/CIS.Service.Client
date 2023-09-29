@@ -14,16 +14,31 @@ namespace CIS.Service.Client.Services
         /// <summary>
         /// Async loads the available attribute list for the specified user.
         /// </summary>
-        Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user) where T : IdentityObject;
+        Task<List<MetaAttribute>> LoadAttributesAsync<T>(ImpersonatingUser user) where T : IdentityObject;
 
         /// <summary>
         /// Async loads the available attribute list for the specified user.
         /// </summary>
-        Task<List<MetaAttribute>> LoadAttributes(ImpersonatingUser user, string objectClassName);
+        Task<List<MetaAttribute>> LoadAttributesAsync(ImpersonatingUser user, string objectClassName);
 
         /// <summary>
         /// Async loads the available attribute list for the context object and specified user.
         /// </summary>
-        Task<List<MetaAttribute>> LoadAttributes<T>(ImpersonatingUser user, T contextObject) where T : IdentityObject;
+        Task<List<MetaAttribute>> LoadAttributesAsync<T>(ImpersonatingUser user, T contextObject) where T : IdentityObject;
+
+        /// <summary>
+        /// Async loads the accessible meta-system info for the specified user.
+        /// </summary>
+        Task<MetaClass> LoadMetaClassAsync<T>(ImpersonatingUser user) where T : IdentityObject;
+
+        /// <summary>
+        /// Async loads the accessible meta-system info for the specified user.
+        /// </summary>
+        Task<MetaClass> LoadMetaClassAsync(ImpersonatingUser user, string objectClassName);
+
+        /// <summary>
+        /// Async loads the accessible meta-system info for the context object and specified user.
+        /// </summary>
+        Task<MetaClass> LoadMetaClassAsync<T>(ImpersonatingUser user, T contextObject) where T : IdentityObject;
     }
 }
