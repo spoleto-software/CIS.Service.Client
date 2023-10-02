@@ -12,29 +12,31 @@ namespace CIS.Service.Client.Services
     /// </summary>
     public interface IImpersonatingPersistentCisServiceProvider
     {
+        Task<long> GetCountObjectListAsync<T>(ImpersonatingUser user, FilterModel filterModel = null);
+
         Task<T> LoadObjectByFilterAsync<T>(ImpersonatingUser user, SearchModel searchModel = null) where T : IdentityObject;
 
         Task<List<T>> LoadObjectListAsync<T>(ImpersonatingUser user, SearchModel searchModel = null) where T : IdentityObject;
 
-        ///// <summary>
-        ///// Async loads the object value of specified column list from the data source.
-        ///// </summary>
-        //Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
-        
-        ///// <summary>
-        ///// Async loads the list of the object value of specified column with correspoing identity from the data source.
-        ///// </summary>
-        //Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
+        /// <summary>
+        /// Async loads the object value of specified column list from the data source.
+        /// </summary>
+        Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ImpersonatingUser user, ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
 
-        ///// <summary>
-        ///// Async loads the object value of specified column list from the data source.
-        ///// </summary>
-        //Task<List<TV>> LoadObjectValueListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel);
+        /// <summary>
+        /// Async loads the list of the object value of specified column with correspoing identity from the data source.
+        /// </summary>
+        Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ImpersonatingUser user, ValueSearchModel valueSearchModel) where TFrom : IdentityObject;
 
-        ///// <summary>
-        ///// Async loads the list of the object value of specified column with correspoing identity from the data source.
-        ///// </summary>
-        //Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV>(string objectClassName, ValueSearchModel valueSearchModel);
+        /// <summary>
+        /// Async loads the object value of specified column list from the data source.
+        /// </summary>
+        Task<List<TV>> LoadObjectValueListAsync<TV>(ImpersonatingUser user, string objectClassName, ValueSearchModel valueSearchModel);
+
+        /// <summary>
+        /// Async loads the list of the object value of specified column with correspoing identity from the data source.
+        /// </summary>
+        Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV>(ImpersonatingUser user, string objectClassName, ValueSearchModel valueSearchModel);
 
         Task<T> CreateAsync<T>(ImpersonatingUser user, T creatingObject) where T : IdentityObject;
 

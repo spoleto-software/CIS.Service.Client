@@ -14,6 +14,27 @@ namespace CIS.Service.Client.Services
     {
         private const string _impersonatingControllerName = "api/persistent/impersonating";
 
+        public async Task<long> GetCountObjectListAsync<T>(ImpersonatingUser user, FilterModel filterModel = null)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/GetCountObjectList");
+
+            filterModel ??= new();
+            var impersonatingFilterModel = new ImpersonatingFilterModel
+            {
+                User = user,
+                FilterModel = filterModel
+            };
+
+            var jsonModel = JsonHelper.ToJson(impersonatingFilterModel);
+
+            var count = await InvokeAsync<long>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return count;
+        }
+
         public async Task<T> LoadObjectByFilterAsync<T>(ImpersonatingUser user, SearchModel searchModel = null) where T : IdentityObject
         {
             var singleSearchModel = ToSingleSearchModel(searchModel);
@@ -30,17 +51,82 @@ namespace CIS.Service.Client.Services
             if (user == null)
                 throw new ArgumentNullException(nameof(user));
 
+            searchModel ??= new();
             var impersonatingSearchModel = new ImpersonatingSearchModel
             {
                 User = user,
                 SearchModel = searchModel
             };
 
-            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/LoadObjectListSimple");
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/LoadObjectList");
 
             var jsonModel = JsonHelper.ToJson(impersonatingSearchModel);
 
             var objList = await InvokeAsync<List<T>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return objList;
+        }
+
+        public Task<List<TV>> LoadObjectValueListAsync<TV, TFrom>(ImpersonatingUser user, ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+            => LoadObjectValueListAsync<TV>(user, typeof(TFrom).Name, valueSearchModel);
+
+        public Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV, TFrom>(ImpersonatingUser user, ValueSearchModel valueSearchModel) where TFrom : IdentityObject
+            => LoadObjectValueKeyListAsync<TV>(user, typeof(TFrom).Name, valueSearchModel);
+
+        public async Task<List<TV>> LoadObjectValueListAsync<TV>(ImpersonatingUser user, string objectClassName, ValueSearchModel valueSearchModel)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (valueSearchModel == null)
+                throw new ArgumentNullException(nameof(valueSearchModel));
+
+            var valueSearchCriteria = new ValueSearchCriteria
+            {
+                SearchModel = valueSearchModel,
+                ColumnType = new WebType(typeof(TV))
+            };
+
+            var impersonatingValueSearchCriteria = new ImpersonatingValueSearchCriteria
+            {
+                User = user,
+                ValueSearchCriteria = valueSearchCriteria
+            };
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{objectClassName}/LoadObjectValueList");
+
+            var jsonModel = JsonHelper.ToJson(impersonatingValueSearchCriteria);
+
+            var objList = await InvokeAsync<List<TV>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return objList;
+        }
+
+        public async Task<List<ObjectValue<TV>>> LoadObjectValueKeyListAsync<TV>(ImpersonatingUser user, string objectClassName, ValueSearchModel valueSearchModel)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (valueSearchModel == null)
+                throw new ArgumentNullException(nameof(valueSearchModel));
+
+            var valueSearchCriteria = new ValueSearchCriteria
+            {
+                SearchModel = valueSearchModel,
+                ColumnType = new WebType(typeof(TV))
+            };
+
+            var impersonatingValueSearchCriteria = new ImpersonatingValueSearchCriteria
+            {
+                User = user,
+                ValueSearchCriteria = valueSearchCriteria
+            };
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{objectClassName}/LoadObjectValueKeyList");
+
+            var jsonModel = JsonHelper.ToJson(impersonatingValueSearchCriteria);
+
+            var objList = await InvokeAsync<List<ObjectValue<TV>>>(Settings, uri, HttpMethod.Post, jsonModel);
 
             return objList;
         }

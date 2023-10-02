@@ -2,6 +2,7 @@
 using CIS.Service.Client.Models;
 using CIS.Service.Client.Services;
 using CIS.Service.Client.Tests.Models;
+using Core.Common;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CIS.Service.Client.Tests.Tests
@@ -17,6 +18,22 @@ namespace CIS.Service.Client.Tests.Tests
         }
 
         [Test]
+        public async Task GetCountObjectListByMaterialName()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingPersistentCisServiceProvider>();
+
+            // Act
+            var count = await provider.GetCountObjectListAsync<MaterialName>(_user, new FilterModel { Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(count, Is.GreaterThan(0));
+            });
+        }
+
+        [Test]
         public async Task LoadObjectListByMaterialName()
         {
             // Arrange
@@ -24,6 +41,70 @@ namespace CIS.Service.Client.Tests.Tests
 
             // Act
             var materialNames = await provider.LoadObjectListAsync<MaterialName>(_user, new SearchModel { Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(materialNames, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadObjectValueListAsyncByMaterialName()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingPersistentCisServiceProvider>();
+
+            // Act
+            var materialNames = await provider.LoadObjectValueListAsync<LocalizableString, MaterialName>(_user, new ValueSearchModel { Column = nameof(MaterialName.Name), Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(materialNames, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadObjectValueListAsyncByMaterialNameNonGeneric()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingPersistentCisServiceProvider>();
+
+            // Act
+            var materialNames = await provider.LoadObjectValueListAsync<LocalizableString>(_user, typeof(MaterialName).Name, new ValueSearchModel { Column = nameof(MaterialName.Name), Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(materialNames, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadObjectValueKeyListAsyncByMaterialName()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingPersistentCisServiceProvider>();
+
+            // Act
+            var materialNames = await provider.LoadObjectValueKeyListAsync<LocalizableString, MaterialName>(_user, new ValueSearchModel { Column=nameof(MaterialName.Name), Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(materialNames, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadObjectValueKeyListAsyncByMaterialNameNonGeneric()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingPersistentCisServiceProvider>();
+
+            // Act
+            var materialNames = await provider.LoadObjectValueKeyListAsync<LocalizableString>(_user,typeof(MaterialName).Name, new ValueSearchModel { Column = nameof(MaterialName.Name), Filter = "Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe19\") OR Identity = Guid.Parse(\"079e3f60-1151-454b-9c67-006cb965fe09\")" });
 
             // Assert
             Assert.Multiple(() =>
