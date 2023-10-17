@@ -254,5 +254,53 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(metaClass, Is.Not.Null);
             });
         }
+
+        [Test]
+        public async Task LoadMetaClassForOrderDisplay()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var metaClass = await provider.LoadMetaClassAsync<OrderDisplay>(_user);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(metaClass, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadMetaClassForOrderDisplayNonGeneric()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var metaClass = await provider.LoadMetaClassAsync(_user, typeof(OrderDisplay).Name);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(metaClass, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadMetaClassForOrderDisplayWithContext()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var metaClass = await provider.LoadMetaClassAsync<OrderDisplay>(_user, new() { Identity = Guid.NewGuid(), Name = "Заказ тестовый" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(metaClass, Is.Not.Null);
+            });
+        }
     }
 }

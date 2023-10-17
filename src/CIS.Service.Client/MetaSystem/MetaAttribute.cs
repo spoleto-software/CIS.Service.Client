@@ -36,6 +36,13 @@ namespace CIS.Service.Client.MetaSystem
         [JsonRequired]
         public bool IsEnabled { get; set; }
 
-        public override string ToString() => $"{Name}, {nameof(Type)}: {Type}, {nameof(IsEnabled)}: {IsEnabled}, {nameof(IsVisible)}: {IsVisible}";
+        /// <summary>
+        /// Gets or sets whether the attribute is required.
+        /// </summary>
+        [Required]
+        [JsonRequired]
+        public bool IsRequired { get; set; }
+
+        public override string ToString() => $"{Name}, {nameof(Type)}: {Type}, {nameof(IsEnabled)}: {IsEnabled}, {nameof(IsVisible)}: {IsVisible}, {nameof(IsRequired)}: {IsRequired}";
     }
 }

@@ -7,5 +7,7 @@ namespace CIS.Service.Client.Tests.Models
         public string Name { get; set; }
 
         public int Number { get; set; }
+
+        public Guid? ManufacturerOfTrademarkId { get; set; }
     }
 }
