@@ -40,5 +40,10 @@ namespace CIS.Service.Client.Services
         /// Async loads the accessible meta-system info for the context object and specified user.
         /// </summary>
         Task<MetaClass> LoadMetaClassAsync<T>(ImpersonatingUser user, T contextObject) where T : IdentityObject;
+
+        /// <summary>
+        /// Async loads the accessible meta-system info list for the specified user.
+        /// </summary>
+        Task<List<MetaClass>> LoadMetaClassListAsync(ImpersonatingUser user, List<string> objectClassNames, bool withAttributes = false);
     }
 }

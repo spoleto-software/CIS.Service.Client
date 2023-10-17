@@ -302,5 +302,30 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(metaClass, Is.Not.Null);
             });
         }
+
+        [Test]
+        public async Task LoadMetaClassList()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+            var objectClassNameList = new List<string>
+            {
+                nameof(OrderDisplay),
+                nameof(Color),
+                nameof(Employee),
+                nameof(OnlineClient),
+                nameof(LegalPerson)
+            };
+
+            // Act
+            var metaClassList = await provider.LoadMetaClassListAsync(_user, objectClassNameList);
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(metaClassList, Is.Not.Null);
+                Assert.That(metaClassList, Has.Count.EqualTo(objectClassNameList.Count));
+            });
+        }
     }
 }

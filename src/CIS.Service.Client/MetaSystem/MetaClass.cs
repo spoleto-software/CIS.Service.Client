@@ -20,7 +20,6 @@ namespace CIS.Service.Client.MetaSystem
         /// Gets or sets the attributes
         /// </summary>
         [Required]
-        [JsonRequired]
         public List<MetaAttribute> Attributes { get; set; }
 
         /// <summary>
@@ -29,5 +28,7 @@ namespace CIS.Service.Client.MetaSystem
         [Required]
         [JsonRequired]
         public Dictionary<PermissionType, bool> ClassPermissions { get; set; }
+
+        public override string ToString() => Name;
     }
 }

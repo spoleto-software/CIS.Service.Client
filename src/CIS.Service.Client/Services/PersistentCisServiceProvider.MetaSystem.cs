@@ -77,7 +77,6 @@ namespace CIS.Service.Client.Services
             if (contextObject == null)
                 throw new ArgumentNullException(nameof(contextObject));
 
-
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/LoadMetaClassByContext");
 
             var impersonatingContextObject = new ImpersonatingPersistentObject<T>
@@ -91,6 +90,30 @@ namespace CIS.Service.Client.Services
             var metaClass = await InvokeAsync<MetaClass>(Settings, uri, HttpMethod.Post, jsonModel);
 
             return metaClass;
+        }
+
+        public async Task<List<MetaClass>> LoadMetaClassListAsync(ImpersonatingUser user, List<string> objectClassNames, bool withAttributes = false)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (objectClassNames == null)
+                throw new ArgumentNullException(nameof(objectClassNames));
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}PersistentClass/LoadMetaClassList");
+            
+            var impersonatingPersistentClassList = new ImpersonatingPersistentClassList
+            {
+                User = user,
+                ObjectClassNames = objectClassNames,
+                WithAttributes = withAttributes
+            };
+
+            var jsonModel = JsonHelper.ToJson(impersonatingPersistentClassList);
+
+            var metaClassList = await InvokeAsync<List<MetaClass>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return metaClassList;
         }
     }
 }
