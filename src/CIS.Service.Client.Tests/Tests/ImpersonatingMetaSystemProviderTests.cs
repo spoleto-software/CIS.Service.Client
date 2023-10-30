@@ -64,6 +64,22 @@ namespace CIS.Service.Client.Tests.Tests
         }
 
         [Test]
+        public async Task LoadAttributesForMaterialNameWithDictionaryContext()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var attributeList = await provider.LoadAttributesAsync(_user, nameof(MaterialName), new() { { "_identity", Guid.NewGuid() }, { nameof(MaterialName.Name), "test" } });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(attributeList, Is.Not.Null);
+            });
+        }
+
+        [Test]
         public async Task LoadAttributesForEmployee()
         {
             // Arrange
@@ -295,6 +311,22 @@ namespace CIS.Service.Client.Tests.Tests
 
             // Act
             var metaClass = await provider.LoadMetaClassAsync<OrderDisplay>(_user, new() { Identity = Guid.NewGuid(), Name = "Заказ тестовый" });
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(metaClass, Is.Not.Null);
+            });
+        }
+
+        [Test]
+        public async Task LoadMetaClassForOrderDisplayWithDictionaryContext()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IImpersonatingMetaSystemProvider>();
+
+            // Act
+            var metaClass = await provider.LoadMetaClassAsync(_user, nameof(OrderDisplay), new() { { "_identity", Guid.NewGuid() }, { nameof(OrderDisplay.Name), "Заказ тестовый" } });
 
             // Assert
             Assert.Multiple(() =>

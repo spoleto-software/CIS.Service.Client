@@ -52,6 +52,30 @@ namespace CIS.Service.Client.Services
             return attributeList;
         }
 
+        public async Task<List<MetaAttribute>> LoadAttributesAsync(ImpersonatingUser user, string objectClassName, Dictionary<string, object> contextObject)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (contextObject == null)
+                throw new ArgumentNullException(nameof(contextObject));
+
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{objectClassName}/LoadAttributesByContext");
+
+            var impersonatingContextObject = new ImpersonatingDictionaryObject
+            {
+                User = user,
+                Object = contextObject
+            };
+
+            var jsonModel = JsonHelper.ToJson(impersonatingContextObject);
+
+            var attributeList = await InvokeAsync<List<MetaAttribute>>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return attributeList;
+        }
+
         public Task<MetaClass> LoadMetaClassAsync<T>(ImpersonatingUser user) where T : IdentityObject
             => LoadMetaClassAsync(user, typeof(T).Name);
 
@@ -80,6 +104,29 @@ namespace CIS.Service.Client.Services
             var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{typeof(T).Name}/LoadMetaClassByContext");
 
             var impersonatingContextObject = new ImpersonatingPersistentObject<T>
+            {
+                User = user,
+                Object = contextObject
+            };
+
+            var jsonModel = JsonHelper.ToJson(impersonatingContextObject);
+
+            var metaClass = await InvokeAsync<MetaClass>(Settings, uri, HttpMethod.Post, jsonModel);
+
+            return metaClass;
+        }
+
+        public async Task<MetaClass> LoadMetaClassAsync(ImpersonatingUser user, string objectClassName, Dictionary<string, object> contextObject)
+        {
+            if (user == null)
+                throw new ArgumentNullException(nameof(user));
+
+            if (contextObject == null)
+                throw new ArgumentNullException(nameof(contextObject));
+
+            var uri = new Uri(new Uri(Settings.WebAPIEndpointAddress), $"{_impersonatingControllerName}{objectClassName}/LoadMetaClassByContext");
+
+            var impersonatingContextObject = new ImpersonatingDictionaryObject
             {
                 User = user,
                 Object = contextObject
