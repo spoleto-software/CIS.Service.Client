@@ -10,6 +10,7 @@ using CIS.Service.Client.Interfaces;
 using CIS.Service.Client.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Spoleto.Common.Objects;
 
 namespace CIS.Service.Client.Services
 {

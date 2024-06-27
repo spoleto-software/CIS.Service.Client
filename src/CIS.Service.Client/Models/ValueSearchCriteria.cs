@@ -1,4 +1,6 @@
-﻿namespace CIS.Service.Client.Models
+﻿using Spoleto.Common.Objects;
+
+namespace CIS.Service.Client.Models
 {
     /// <summary>
     /// The model with the <see cref="ValueSearchModel"/> and the specified column type.

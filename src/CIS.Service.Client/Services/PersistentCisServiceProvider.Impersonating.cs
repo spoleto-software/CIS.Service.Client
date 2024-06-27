@@ -7,6 +7,7 @@ using CIS.Service.Client.Extensions;
 using CIS.Service.Client.Helpers;
 using CIS.Service.Client.Interfaces;
 using CIS.Service.Client.Models;
+using Spoleto.Common.Objects;
 
 namespace CIS.Service.Client.Services
 {

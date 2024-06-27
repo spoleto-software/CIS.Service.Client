@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text.Json.Serialization;
 using CIS.Service.Client.Helpers;
+using Spoleto.Common.Objects;
 
 namespace CIS.Service.Client.Models
 {

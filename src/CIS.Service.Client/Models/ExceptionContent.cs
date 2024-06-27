@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json.Serialization;
+using Spoleto.Common.Objects;
 
 namespace CIS.Service.Client.Models
 {

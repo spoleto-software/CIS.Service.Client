@@ -1,4 +1,5 @@
 ﻿using System;
+using Spoleto.Common.Objects;
 
 namespace CIS.Service.Client.Models
 {
