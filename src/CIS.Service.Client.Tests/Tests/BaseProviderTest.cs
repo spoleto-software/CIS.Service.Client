@@ -35,5 +35,11 @@ namespace CIS.Service.Client.Tests.Tests
 
             _serviceProvider = services.BuildServiceProvider();
         }
+
+        [OneTimeTearDown]
+        public void Dispose()
+        {
+            _serviceProvider.Dispose();
+        }
     }
 }
