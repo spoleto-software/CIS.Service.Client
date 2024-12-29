@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using CIS.Service.Client.Models;
+using CIS.Service.Client.Tests.Models;
 using Microsoft.Extensions.Configuration;
 
 namespace CIS.Service.Client.Tests
@@ -24,6 +25,13 @@ namespace CIS.Service.Client.Tests
             var user = _config.GetSection(nameof(ImpersonatingUser)).Get<ImpersonatingUser>();
 
             return user;
+        }
+
+        public static FnOrderByInfo GetOrderByInfo()
+        {
+            var info = _config.GetSection(nameof(FnOrderByInfo)).Get<FnOrderByInfo>();
+
+            return info;
         }
     }
 }

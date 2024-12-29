@@ -7,6 +7,8 @@ namespace CIS.Service.Client.Tests.Models
     {
         public string Name { get; set; }
 
+        public string DisplayName { get; set; }
+
         public string Surname { get; set; }
 
         public bool IsActive { get; set; }
@@ -16,5 +18,7 @@ namespace CIS.Service.Client.Tests.Models
         public DateTime DateReceipt { get; set; }
 
         public DateTime? DateDismissal { get; set; }
+
+        public override string ToString() => DisplayName;
     }
 }

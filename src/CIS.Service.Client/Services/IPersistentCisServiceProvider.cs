@@ -49,6 +49,15 @@ namespace CIS.Service.Client.Services
         Task<List<T>> LoadObjectListFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;
 
         /// <summary>
+        /// Async loading the persistent object list of specified class from Table Valued Function with the specified orderBy field names.
+        /// </summary>
+        /// <param name="funcName">The name of Table Valued Function</param>
+        /// <param name="orderByFieldNames">The field names for orderBy statement (Field1, Field2 DESC, Field 3).</param>
+        /// <param name="args">The arguments of Table Valued Function.</param>
+        /// <returns>The persistent object list of specified class.</returns>
+        Task<List<T>> LoadObjectListFnAsync<T>(string funcName, string orderByFieldNames, params object[] args) where T : IdentityObject;
+
+        /// <summary>
         /// Async loading the persistent object list of specified class from the specified function on C# code.
         /// </summary>
         Task<List<T>> LoadObjectListCodeFnAsync<T>(string funcName, params object[] args) where T : IdentityObject;

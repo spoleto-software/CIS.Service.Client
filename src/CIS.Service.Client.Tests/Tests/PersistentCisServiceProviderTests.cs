@@ -955,5 +955,22 @@ namespace CIS.Service.Client.Tests.Tests
             // Assert
             Assert.Pass();
         }
+
+        [Test]
+        public async Task LoadObjectListOrderByFnAsync()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var info = ConfigurationHelper.GetOrderByInfo();
+
+            // Act
+            var employees = await provider.LoadObjectListFnAsync<Employee>(info.FuncName, info.OrderByFields, info.Args?.Select(x => x.GetRealValue()).ToArray());
+
+            // Assert
+            Assert.Multiple(() =>
+            {
+                Assert.That(employees, Is.Not.Null);
+            });
+        }
     }
 }
