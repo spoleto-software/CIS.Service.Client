@@ -972,5 +972,28 @@ namespace CIS.Service.Client.Tests.Tests
                 Assert.That(employees, Is.Not.Null);
             });
         }
+
+        [Test]
+        public async Task BulkInsertByMaterialName()
+        {
+            // Arrange
+            var provider = ServiceProvider.GetService<IPersistentCisServiceProvider>();
+            var materialName1 = new MaterialName
+            {
+                Identity = Guid.NewGuid(),
+                Name = "Material Bulk Insert 10 Test"
+            };
+            var materialName2 = new MaterialName
+            {
+                Identity = Guid.NewGuid(),
+                Name = "Material Bulk Insert 11 Test"
+            };
+
+            // Act
+            await provider.BulkInsertAsync(new List<MaterialName> { materialName1, materialName2 });
+
+            // Assert
+            Assert.Pass();
+        }
     }
 }
